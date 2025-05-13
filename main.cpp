@@ -9,6 +9,8 @@
 #include "OpenGL-basico/Escena/escena.h"
 
 using namespace std;
+/////
+int main(int argc, char *argv[]) {
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
 
 
