@@ -7,7 +7,7 @@
 #include <GL/glu.h>
 
 using namespace std;
-
+/////
 int main(int argc, char *argv[]) {
 	//INICIALIZACION
 	if (SDL_Init(SDL_INIT_VIDEO)<0) {
