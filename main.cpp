@@ -9,7 +9,8 @@
 #include "OpenGL-basico/Escena/escena.h"
 
 using namespace std;
-/////
+void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn);
+
 int main(int argc, char *argv[]) {
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
 
@@ -21,7 +22,7 @@ int main(int argc, char* argv[]) {
 		exit(1);
 	}
 
-	SDL_Window* win = SDL_CreateWindow("ICG-UdelaR",
+	SDL_Window* win = SDL_CreateWindow("juego",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
@@ -89,6 +90,44 @@ int main(int argc, char* argv[]) {
 		}
 		glRotatef(degrees, 0.0, 1.0, 0.0);
 
+		//DIBUJAR OBJETOS
+		//DIBUJO TRIANGULO CON COLOR
+		glBegin(GL_TRIANGLES);
+			glColor3f(1.0, 0.0, 0.0);
+			glVertex3f(1., -1., 0.);
+			glVertex3f(-1., -1., 0.);
+			glVertex3f(0., 1., 0.);
+		glEnd();
+		glPopMatrix();
+
+		//DIBUJO TRIANGULO CON TEXTURA
+		if (textOn){
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, textura);
+		}
+		glBegin(GL_TRIANGLES);
+			glColor3f(1.0, 1.0, 1.0);
+			glTexCoord2f(0, 0);
+			glVertex3f(3., -1., 0.);
+			glTexCoord2f(0, 1);
+			glVertex3f(1., -1., 0.);
+			glTexCoord2f(1, 0);
+			glVertex3f(2., 1., 0.);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+		Boton boton(0, 0, 1, 1,0.1, 0.1 ,0.1);	
+		boton.dibujar();
+		//DIBUJO TRIANGULO CON LUZ
+		glEnable(GL_LIGHTING);
+		glBegin(GL_TRIANGLES);
+			glNormal3f(0, 0, 1);
+			glVertex3f(-1., -1., 0.);
+			glVertex3f(-3., -1., 0.);
+			glVertex3f(-2., 1., 0.);
+		glEnd();
+		glDisable(GL_LIGHTING);
+
+
 		//FIN DIBUJAR OBJETOS
 
 		//MANEJO DE EVENTOS
@@ -135,3 +174,53 @@ int main(int argc, char* argv[]) {
 	SDL_Quit();
 	return 0;
 }
+		controlador_evento(evento,boton, rotate,fin, textOn);
+		//FIN MANEJO DE EVENTOS
+		SDL_GL_SwapWindow(win);
+	} while (!fin);
+	//FIN LOOP PRINCIPAL
+	// LIMPIEZA
+	SDL_GL_DeleteContext(context);
+	SDL_DestroyWindow(win);
+	SDL_Quit();
+	return 0;
+}
+void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn) {
+	while (SDL_PollEvent(&evento)) {
+		switch (evento.type) {
+		case SDL_MOUSEMOTION:
+			printf("Movimiento del ratón: dx = %d, dy = %d\n", evento.motion.xrel, evento.motion.yrel);
+			break;
+
+		case SDL_MOUSEBUTTONDOWN:
+
+			if (!boton.contiene(evento.button.x, evento.button.y)) {
+				boton.manejarEvento(evento);
+				boton.onClick();
+			}
+			else {
+				cout << "No clickeado\n";
+			}
+			rotate = true;
+			cout << "ROT\n";
+			break;
+		case SDL_MOUSEBUTTONUP:
+			rotate = false;
+			break;
+		case SDL_QUIT:
+			fin = true;
+			break;
+		case SDL_KEYUP:
+			switch (evento.key.keysym.sym) {
+			case SDLK_ESCAPE:
+				fin = true;
+				break;
+			case SDLK_l:
+				textOn = !textOn;
+				break;
+			case SDLK_RIGHT:
+				break;
+			}
+		}
+	}
+	}
