@@ -13,10 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\menu">
+      <UniqueIdentifier>{019fe273-aeeb-4bb2-b145-1da493896298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\botones">
+      <UniqueIdentifier>{65787616-a4cb-4690-a152-78d07a912ec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\luces">
+      <UniqueIdentifier>{42f47723-97e7-47db-b215-483619605aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Texturas">
+      <UniqueIdentifier>{4a7da0ca-c66b-4711-849b-5eb5ac3725dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="boton.cpp">
+      <Filter>Source Files\botones</Filter>
+    </ClCompile>
+    <ClCompile Include="luces.cpp">
+      <Filter>Source Files\luces</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="boton.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,9 +5,11 @@
 #include <stdio.h>
 #include <conio.h>
 #include <GL/glu.h>
+#include "OpenGL-basico/boton.hpp"
 
 using namespace std;
-/////
+void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn);
+
 int main(int argc, char *argv[]) {
 	//INICIALIZACION
 	if (SDL_Init(SDL_INIT_VIDEO)<0) {
@@ -15,11 +17,13 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 
-	SDL_Window* win = SDL_CreateWindow("ICG-UdelaR",
+	SDL_Window* win = SDL_CreateWindow("juego",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 		640, 480, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 	SDL_GLContext context = SDL_GL_CreateContext(win);
+
+	SDL_SetWindowGrab(win, SDL_TRUE);
 
 	glMatrixMode(GL_PROJECTION);
 
@@ -120,7 +124,8 @@ int main(int argc, char *argv[]) {
 			glVertex3f(2., 1., 0.);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
-
+		Boton boton(0, 0, 1, 1,0.1, 0.1 ,0.1);	
+		boton.dibujar();
 		//DIBUJO TRIANGULO CON LUZ
 		glEnable(GL_LIGHTING);
 		glBegin(GL_TRIANGLES);
@@ -135,31 +140,7 @@ int main(int argc, char *argv[]) {
 		//FIN DIBUJAR OBJETOS
 
 		//MANEJO DE EVENTOS
-		while (SDL_PollEvent(&evento)){
-			switch (evento.type) {
-			case SDL_MOUSEBUTTONDOWN:
-				rotate = true;
-				cout << "ROT\n";
-				break;
-			case SDL_MOUSEBUTTONUP:
-				rotate = false;
-				break;
-			case SDL_QUIT:
-				fin = true;
-				break;
-			case SDL_KEYUP:
-				switch (evento.key.keysym.sym) {
-				case SDLK_ESCAPE:
-					fin = true;
-					break;
-				case SDLK_l:
-					textOn = !textOn;
-					break;
-				case SDLK_RIGHT:
-					break;
-				}
-			}
-		}
+		controlador_evento(evento,boton, rotate,fin, textOn);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
 	} while (!fin);
@@ -170,3 +151,42 @@ int main(int argc, char *argv[]) {
 	SDL_Quit();
 	return 0;
 }
+void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn) {
+	while (SDL_PollEvent(&evento)) {
+		switch (evento.type) {
+		case SDL_MOUSEMOTION:
+			printf("Movimiento del ratón: dx = %d, dy = %d\n", evento.motion.xrel, evento.motion.yrel);
+			break;
+
+		case SDL_MOUSEBUTTONDOWN:
+
+			if (!boton.contiene(evento.button.x, evento.button.y)) {
+				boton.manejarEvento(evento);
+				boton.onClick();
+			}
+			else {
+				cout << "No clickeado\n";
+			}
+			rotate = true;
+			cout << "ROT\n";
+			break;
+		case SDL_MOUSEBUTTONUP:
+			rotate = false;
+			break;
+		case SDL_QUIT:
+			fin = true;
+			break;
+		case SDL_KEYUP:
+			switch (evento.key.keysym.sym) {
+			case SDLK_ESCAPE:
+				fin = true;
+				break;
+			case SDLK_l:
+				textOn = !textOn;
+				break;
+			case SDLK_RIGHT:
+				break;
+			}
+		}
+	}
+	}

@@ -80,6 +80,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="boton.cpp" />
+    <ClCompile Include="luces.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="boton.hpp" />
+    <ClInclude Include="luces.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
