@@ -16,7 +16,7 @@ protected:
 public:
     explicit Boton(float _x, float _y, float _w, float _h,
         float _r = 0.0f, float _g = 0.5f, float _b = 1.0f)
-        : x(0), y(0), w(_w), h(_h), r(_r), g(_g), b(_b), clickeado(false) {
+        : x(_x), y(_y), w(_w), h(_h), r(_r), g(_g), b(_b), clickeado(false) {
     }
 
     virtual ~Boton() = default;

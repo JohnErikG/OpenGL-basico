@@ -45,12 +45,15 @@
     <ClCompile Include="manejadorT.cpp">
       <Filter>Source Files\Texturas</Filter>
     </ClCompile>
+    <ClCompile Include="manejadorL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boton.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="luces.h">
+    <ClInclude Include="luces.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Texturas.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="manejadorT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="manejadorL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

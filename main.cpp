@@ -36,10 +36,7 @@ int main(int argc, char *argv[]) {
 	glMatrixMode(GL_MODELVIEW);
 
 	//TEXTURA
-	// 
-	// 
 	manejadorT::init();
-
 
 
 	bool fin = false;
@@ -118,7 +115,7 @@ int main(int argc, char *argv[]) {
 			glVertex3f(-2., 1., 0.);
 		glEnd();
 		glDisable(GL_LIGHTING);
-
+		
 
 		//FIN DIBUJAR OBJETOS
 
