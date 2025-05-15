@@ -72,7 +72,7 @@
       <Filter>Source Files\Texturas</Filter>
     </ClCompile>
     <ClCompile Include="manejadorL.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\luces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
