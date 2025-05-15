@@ -6,6 +6,7 @@
 #include <conio.h>
 #include <GL/glu.h>
 #include "OpenGL-basico/boton.hpp"
+#include "OpenGL-basico/manejadorT.h"
 
 using namespace std;
 void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn);
@@ -35,28 +36,10 @@ int main(int argc, char *argv[]) {
 	glMatrixMode(GL_MODELVIEW);
 
 	//TEXTURA
-	char* archivo = new char[20];
-	archivo = "../canon.png";
+	// 
+	// 
+	manejadorT::init();
 
-	//CARGAR IMAGEN
-	FREE_IMAGE_FORMAT fif = FreeImage_GetFIFFromFilename(archivo);
-	FIBITMAP* bitmap = FreeImage_Load(fif, archivo);
-	bitmap = FreeImage_ConvertTo24Bits(bitmap);
-	int w = FreeImage_GetWidth(bitmap);
-	int h = FreeImage_GetHeight(bitmap);
-	void* datos = FreeImage_GetBits(bitmap);
-	//FIN CARGAR IMAGEN
-
-	GLuint textura;
-	glGenTextures(1, &textura);
-	glBindTexture(GL_TEXTURE_2D, textura);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_BGR, GL_UNSIGNED_BYTE, datos);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	//FIN TEXTURA
 
 
 	bool fin = false;
@@ -112,7 +95,7 @@ int main(int argc, char *argv[]) {
 		//DIBUJO TRIANGULO CON TEXTURA
 		if (textOn){
 			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, textura);
+			glBindTexture(GL_TEXTURE_2D, manejadorT::imagenM().getId());
 		}
 		glBegin(GL_TRIANGLES);
 			glColor3f(1.0, 1.0, 1.0);
@@ -172,6 +155,21 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 			break;
 		case SDL_MOUSEBUTTONUP:
 			rotate = false;
+			break;
+		case SDLK_p:
+			cout << "abrir menu";
+			break;
+		case SDLK_w:
+			cout << "W Arriba";
+			break;
+		case SDLK_a:
+			cout << "A Izquierda";
+			break;
+		case SDLK_s:
+			cout << "S Abajo";
+			break;
+		case SDLK_d:
+			cout << "D Derecha";
 			break;
 		case SDL_QUIT:
 			fin = true;

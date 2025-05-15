@@ -36,12 +36,30 @@
     <ClCompile Include="luces.cpp">
       <Filter>Source Files\luces</Filter>
     </ClCompile>
+    <ClCompile Include="Texturas.cpp">
+      <Filter>Source Files\Texturas</Filter>
+    </ClCompile>
+    <ClCompile Include="cargadorT.cpp">
+      <Filter>Source Files\Texturas</Filter>
+    </ClCompile>
+    <ClCompile Include="manejadorT.cpp">
+      <Filter>Source Files\Texturas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boton.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="luces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texturas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cargadorT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="manejadorT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

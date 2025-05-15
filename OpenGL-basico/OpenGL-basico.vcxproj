@@ -81,11 +81,17 @@
   <ItemGroup>
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="boton.cpp" />
+    <ClCompile Include="cargadorT.cpp" />
+    <ClCompile Include="manejadorT.cpp" />
+    <ClCompile Include="Texturas.cpp" />
     <ClCompile Include="luces.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boton.hpp" />
+    <ClInclude Include="Texturas.h" />
+    <ClInclude Include="cargadorT.h" />
     <ClInclude Include="luces.h" />
+    <ClInclude Include="manejadorT.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
