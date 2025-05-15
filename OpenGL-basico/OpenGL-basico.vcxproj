@@ -156,6 +156,7 @@
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="boton.cpp" />
     <ClCompile Include="cargadorT.cpp" />
+    <ClCompile Include="manejadorL.cpp" />
     <ClCompile Include="manejadorT.cpp" />
     <ClCompile Include="Texturas.cpp" />
     <ClCompile Include="luces.cpp" />
@@ -166,9 +167,10 @@
     <ClInclude Include="Player\player.h" />
     <ClInclude Include="Utils\vector3.h" />
     <ClInclude Include="boton.hpp" />
+    <ClInclude Include="manejadorL.h" />
     <ClInclude Include="Texturas.h" />
     <ClInclude Include="cargadorT.h" />
-    <ClInclude Include="luces.h" />
+    <ClInclude Include="luces.hpp" />
     <ClInclude Include="manejadorT.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

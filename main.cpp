@@ -42,8 +42,6 @@ int main(int argc, char* argv[]) {
 	glMatrixMode(GL_MODELVIEW);
 
 	//TEXTURA
-	// 
-	// 
 	manejadorT::init();
 	char* archivo = new char[30];
 	archivo = "../Texturas/tierra.jpg";
@@ -71,7 +69,6 @@ int main(int argc, char* argv[]) {
 	cout << textura;
 
 	escena escena;
-
 
 	bool fin = false;
 	bool rotate = false;
@@ -131,7 +128,7 @@ int main(int argc, char* argv[]) {
 			glVertex3f(-2., 1., 0.);
 		glEnd();
 		glDisable(GL_LIGHTING);
-
+		
 
 		//FIN DIBUJAR OBJETOS
 
