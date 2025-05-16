@@ -18,7 +18,7 @@
 class luces
 {
 private:
-	GLuint luz;
+	
 	GLfloat luz_p[4];
 	float r_a, g_a, b_a;
 	float r_d, g_d, b_d;
@@ -26,8 +26,8 @@ private:
 public:
 
 	explicit luces(GLfloat luz_posicion[4], float r_ambient, float g_ambient, float b_ambient,
-		float r_diffuse, float g_diffuse, float b_diffuse, const GLuint luz ) :luz_p{ luz_posicion[1],luz_posicion[2],luz_posicion[3],luz_posicion[4] }, r_a(r_ambient), g_a(g_ambient), b_a(b_ambient),
-			r_d(r_diffuse),g_d(g_diffuse),b_d(b_diffuse), luz(luz){}
+		float r_diffuse, float g_diffuse, float b_diffuse ) :luz_p{ luz_posicion[1],luz_posicion[2],luz_posicion[3],luz_posicion[4] }, r_a(r_ambient), g_a(g_ambient), b_a(b_ambient),
+			r_d(r_diffuse),g_d(g_diffuse),b_d(b_diffuse){}
 	
 	void setLuzPosicion(GLfloat luz_posicion[4])
 	{
@@ -56,7 +56,10 @@ public:
 		glLightfv(luz, GL_DIFFUSE, colorLuz);
 		glLightfv(luz, GL_AMBIENT, colorLuz);
 	}
-	GLuint getLuz() const;
+	void desactivarLuz(int luz)
+	{
+		glDisable(luz);
+	}
 
 };
 

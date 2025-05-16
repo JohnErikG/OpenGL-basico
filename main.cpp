@@ -9,9 +9,9 @@
 #include "OpenGL-basico/Escena/escena.h"
 #include "OpenGL-basico/boton.hpp"
 #include "OpenGL-basico/manejadorT.h"
-
+#include "OpenGL-basico/manejadorL.h"
 using namespace std;
-void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn);
+void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON);
 
 int main(int argc, char *argv[]) {
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
@@ -43,32 +43,9 @@ int main(int argc, char* argv[]) {
 
 	//TEXTURA
 	manejadorT::init();
+	manejadorL::init();
 	char* archivo = new char[30];
 	archivo = "../Texturas/tierra.jpg";
-
-	//CARGAR IMAGEN
-	FREE_IMAGE_FORMAT fif = FreeImage_GetFIFFromFilename(archivo);
-	FIBITMAP* bitmap = FreeImage_Load(fif, archivo);
-	bitmap = FreeImage_ConvertTo24Bits(bitmap);
-	int w = FreeImage_GetWidth(bitmap);
-	int h = FreeImage_GetHeight(bitmap);
-	void* datos = FreeImage_GetBits(bitmap);
-	//FIN CARGAR IMAGEN
-
-	GLuint textura;
-	glGenTextures(1, &textura);
-	glBindTexture(GL_TEXTURE_2D, textura);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_BGR, GL_UNSIGNED_BYTE, datos);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	//FIN TEXTURA
-
-	cout << textura;
-
-	escena escena;
 
 	bool fin = false;
 	bool rotate = false;
@@ -82,13 +59,39 @@ int main(int argc, char* argv[]) {
 	z = 5;
 	float degrees = 0;
 
-	do {
+	GLfloat luz_posicion[4] = { 0, 0, 1, 1 };
+	//GLfloat luz_posicion1[4] = { 0, 0, -1, 1 };
+	GLfloat colorLuz[4] = { 1, 0, 0, 0 };
+	//FIN INICIALIZACION
+	bool textOn = true;
+	bool luzON = false;
+	//LOOP PRINCIPAL
+	do{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		escena.actualizar_escena();
 
-		if (rotate) {
-			degrees = degrees + 0.5f;
+		//PRENDO LA LUZ (SIEMPRE DESPUES DEL gluLookAt)
+		//glEnable(GL_LIGHT0); // habilita la luz 0
+		//glLightfv(GL_LIGHT0, GL_POSITION, luz_posicion);
+		//glLightfv(GL_LIGHT0, GL_DIFFUSE, colorLuz);
+		//
+		//glEnable(GL_LIGHT1); // habilita la luz 1
+		//glLightfv(GL_LIGHT1, GL_POSITION, luz_posicion1);
+		//glLightfv(GL_LIGHT1, GL_DIFFUSE, colorLuz);
+		if (luzON) {
+			manejadorL::luz1M().activarLuz(GL_LIGHT0);
+
+		}
+		else {
+			manejadorL::luz1M().desactivarLuz(GL_LIGHT0);
+
+		}
+
+		glPushMatrix();
+		//TRANSFORMACIONES LINEALES
+		if (rotate){
+			degrees = degrees + 1;
 		}
 		glRotatef(degrees, 0.0, 1.0, 0.0);
 
@@ -187,7 +190,7 @@ int main(int argc, char* argv[]) {
 	SDL_Quit();
 	return 0;
 }
-void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn) {
+void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON) {
 	while (SDL_PollEvent(&evento)) {
 		switch (evento.type) {
 		case SDL_MOUSEMOTION:
@@ -209,21 +212,7 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 		case SDL_MOUSEBUTTONUP:
 			rotate = false;
 			break;
-		case SDLK_p:
-			cout << "abrir menu";
-			break;
-		case SDLK_w:
-			cout << "W Arriba";
-			break;
-		case SDLK_a:
-			cout << "A Izquierda";
-			break;
-		case SDLK_s:
-			cout << "S Abajo";
-			break;
-		case SDLK_d:
-			cout << "D Derecha";
-			break;
+		
 		case SDL_QUIT:
 			fin = true;
 			break;
@@ -236,6 +225,25 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 				textOn = !textOn;
 				break;
 			case SDLK_RIGHT:
+				break;
+			case SDLK_p:
+				cout << "abrir menu";
+				break;
+			case SDLK_g:
+				luzON = !luzON;
+				cout << "G luz";
+				break;
+			case SDLK_w:
+				cout << "W Arriba";
+				break;
+			case SDLK_a:
+				cout << "A Izquierda";
+				break;
+			case SDLK_s:
+				cout << "S Abajo";
+				break;
+			case SDLK_d:
+				cout << "D Derecha";
 				break;
 			}
 		}
