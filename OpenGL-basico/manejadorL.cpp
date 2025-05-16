@@ -1,18 +1,14 @@
 #include "manejadorL.h"
-
+manejadorL* manejadorL::instanceL = nullptr; // Inicialización del puntero estático
 void manejadorL::init()
 {
-	if (instance == nullptr) {
-		instance = new manejadorL();
-	}
-	else {
-		std::cerr << "Error: Instancia de manejadorL ya existe." << std::endl;
-	}
+		instanceL = new manejadorL();
+
 }
 
 luces manejadorL::luz1M()
 {
-	return instance->luz1;
+	return instanceL->luz1;
 }
 
 

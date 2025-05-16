@@ -6,14 +6,14 @@
 #include <stdio.h>
 #include <conio.h>
 #include <GL/glu.h>
-#include "luces.hpp"
+#include "luces.hpp" 
 class manejadorL
 {
-	static manejadorL* instance;	
+	static manejadorL* instanceL ;	
 	luces luz1;
-	const static GLuint pos = 0;
+
 	GLfloat luz_pos[4] = { 0, 0, 1, 1 };
-	explicit manejadorL() :luz1( luz_pos, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, pos+1)
+	explicit manejadorL() :luz1( luz_pos, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
 	{
 	}
 
