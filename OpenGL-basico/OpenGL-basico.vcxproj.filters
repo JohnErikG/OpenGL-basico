@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Texturas">
       <UniqueIdentifier>{4a7da0ca-c66b-4711-849b-5eb5ac3725dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\personaje">
+      <UniqueIdentifier>{d62e2fb5-ef12-4462-b10e-e5c1a9393965}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\main.cpp">
@@ -74,6 +77,9 @@
     <ClCompile Include="manejadorL.cpp">
       <Filter>Source Files\luces</Filter>
     </ClCompile>
+    <ClCompile Include="posicionPer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boton.hpp">
@@ -95,6 +101,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="posicionPer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

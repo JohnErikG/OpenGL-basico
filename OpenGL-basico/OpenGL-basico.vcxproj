@@ -158,6 +158,7 @@
     <ClCompile Include="cargadorT.cpp" />
     <ClCompile Include="manejadorL.cpp" />
     <ClCompile Include="manejadorT.cpp" />
+    <ClCompile Include="posicionPer.cpp" />
     <ClCompile Include="Texturas.cpp" />
     <ClCompile Include="luces.cpp" />
   </ItemGroup>
@@ -168,6 +169,7 @@
     <ClInclude Include="Utils\vector3.h" />
     <ClInclude Include="boton.hpp" />
     <ClInclude Include="manejadorL.h" />
+    <ClInclude Include="posicionPer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Texturas.h" />
     <ClInclude Include="cargadorT.h" />
