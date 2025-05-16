@@ -34,6 +34,13 @@ void Timer::resume() {
     }
 }
 
+void Timer::reset() {
+    startTicks = 0;
+    pausedTicks = 0;
+    started = false;
+    paused = false;
+}
+
 Uint32 Timer::getTicks() const {
     if (!started) return 0;
 
@@ -51,5 +58,10 @@ bool Timer::isStarted() const {
 
 bool Timer::isPaused() const {
     return paused && started;
+}
+
+Uint32 Timer::getSeconds() const
+{
+    return getTicks() / 1000;
 }
 

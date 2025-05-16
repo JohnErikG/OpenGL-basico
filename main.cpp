@@ -10,8 +10,9 @@
 #include "OpenGL-basico/boton.hpp"
 #include "OpenGL-basico/manejadorT.h"
 #include "OpenGL-basico/manejadorL.h"
+#include "OpenGL-basico/timer.h"
 using namespace std;
-void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON);
+void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, Timer &t);
 
 int main(int argc, char *argv[]) {
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
@@ -58,10 +59,11 @@ int main(int argc, char* argv[]) {
 	y = 0;
 	z = 5;
 	float degrees = 0;
-
-	GLfloat luz_posicion[4] = { 0, 0, 1, 1 };
+	Timer t = Timer();
+	
+	/*GLfloat luz_posicion[4] = { 0, 0, 1, 1 };*/
 	//GLfloat luz_posicion1[4] = { 0, 0, -1, 1 };
-	GLfloat colorLuz[4] = { 1, 0, 0, 0 };
+	/*GLfloat colorLuz[4] = { 1, 0, 0, 0 };*/
 	//FIN INICIALIZACION
 	bool textOn = true;
 	bool luzON = false;
@@ -192,7 +194,7 @@ int main(int argc, char* argv[]) {
 	SDL_Quit();
 	return 0;
 }
-void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON) {
+void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON, Timer &t) {
 	while (SDL_PollEvent(&evento)) {
 		switch (evento.type) {
 		case SDL_MOUSEMOTION:
@@ -239,10 +241,12 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 				cout << "G luz";
 				break;
 			case SDLK_w:
-				cout << "W Arriba";
+				cout << "Arriba"<<endl;
+				t.start();
 				break;
 			case SDLK_a:
-				cout << "A Izquierda";
+				cout << "Izquierda"<< endl;
+				cout << "tiempo: " << t.getSeconds() << endl;
 				break;
 			case SDLK_s:
 				cout << "S Abajo";
