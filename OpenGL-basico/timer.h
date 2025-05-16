@@ -11,10 +11,12 @@ public:
     void stop();
     void pause();
     void resume();
-
+	void reset();
+	
     Uint32 getTicks() const;
     bool isStarted() const;
     bool isPaused() const;
+    Uint32 getSeconds() const;
 
 private:
     Uint32 startTicks;
