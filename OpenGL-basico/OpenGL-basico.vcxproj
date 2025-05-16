@@ -159,8 +159,11 @@
     <ClCompile Include="manejadorL.cpp" />
     <ClCompile Include="manejadorT.cpp" />
     <ClCompile Include="posicionPer.cpp" />
+    <ClCompile Include="settings.cpp" />
     <ClCompile Include="Texturas.cpp" />
     <ClCompile Include="luces.cpp" />
+    <ClCompile Include="timer.cpp" />
+    <ClCompile Include="velocidades.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Escena\camara.h" />
@@ -171,10 +174,13 @@
     <ClInclude Include="manejadorL.h" />
     <ClInclude Include="posicionPer.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="settings.h" />
     <ClInclude Include="Texturas.h" />
     <ClInclude Include="cargadorT.h" />
     <ClInclude Include="luces.hpp" />
     <ClInclude Include="manejadorT.h" />
+    <ClInclude Include="timer.h" />
+    <ClInclude Include="velocidades.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OpenGL-basico.rc" />
