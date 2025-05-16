@@ -168,10 +168,14 @@
     <ClInclude Include="Utils\vector3.h" />
     <ClInclude Include="boton.hpp" />
     <ClInclude Include="manejadorL.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Texturas.h" />
     <ClInclude Include="cargadorT.h" />
     <ClInclude Include="luces.hpp" />
     <ClInclude Include="manejadorT.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OpenGL-basico.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

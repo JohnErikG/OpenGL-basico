@@ -81,10 +81,12 @@ int main(int argc, char* argv[]) {
 		//glLightfv(GL_LIGHT1, GL_DIFFUSE, colorLuz);
 		if (luzON) {
 			manejadorL::luz1M().activarLuz(GL_LIGHT0);
-
+			manejadorL::luz2M().desactivarLuz(GL_LIGHT1);
 		}
 		else {
 			manejadorL::luz1M().desactivarLuz(GL_LIGHT0);
+
+			manejadorL::luz2M().activarLuz(GL_LIGHT1);
 
 		}
 
@@ -218,6 +220,9 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 			break;
 		case SDL_KEYUP:
 			switch (evento.key.keysym.sym) {
+			case SDLK_q:
+				fin = true;
+				break;
 			case SDLK_ESCAPE:
 				fin = true;
 				break;
