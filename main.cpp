@@ -14,7 +14,7 @@
 #include "OpenGL-basico/timer.h"
 using namespace std;
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
-void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, Timer &t);
+void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, Timer &t, escena &esc);
 
 
 int main(int argc, char* argv[]) {
@@ -29,8 +29,10 @@ int main(int argc, char* argv[]) {
 		SDL_WINDOWPOS_CENTERED,
 		1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 	SDL_GLContext context = SDL_GL_CreateContext(win);
-	SDL_SetRelativeMouseMode(SDL_TRUE);
-	
+	SDL_SetRelativeMouseMode(SDL_FALSE);
+	SDL_ShowCursor(SDL_ENABLE);
+
+
 
 	glMatrixMode(GL_PROJECTION);
 
@@ -67,7 +69,7 @@ int main(int argc, char* argv[]) {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_BGR, GL_UNSIGNED_BYTE, datos);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-	escena escena;
+	escena esc;
 
 
 	bool fin = false;
@@ -113,7 +115,8 @@ int main(int argc, char* argv[]) {
 			manejadorL::luz2M().activarLuz(GL_LIGHT1);
 
 		}
-		escena.actualizar_escena();
+		SDL_ShowCursor(SDL_ENABLE);
+		esc.actualizar_escena();
 
 		if (rotate) {
 			degrees = degrees + 0.5f;
@@ -160,40 +163,8 @@ int main(int argc, char* argv[]) {
 
 		//FIN DIBUJAR OBJETOS
 
-		//MANEJO DE EVENTOS
-		while (SDL_PollEvent(&evento)) {
-			switch (evento.type) {
-			case SDL_MOUSEMOTION:
-			{
-				const float x_offset = static_cast<float>(evento.motion.xrel);
-				const float y_offset = -static_cast<float>(evento.motion.yrel);
-				escena.rotar_camara(x_offset, y_offset);
-				break;
-			}
 
-			case SDL_MOUSEBUTTONDOWN:
-				rotate = true;
-				cout << "ROT\n";
-				break;
-			case SDL_MOUSEBUTTONUP:
-				rotate = false;
-				break;
-			case SDL_QUIT:
-				fin = true;
-				break;
-			case SDL_KEYUP:
-				escena.mover_jugador(evento);
-				switch (evento.key.keysym.sym) {
-				case SDLK_ESCAPE:
-					fin = true;
-					break;
-				case SDLK_v:
-					escena.cambiar_camara();
-					cout << "CAMBIE";
-					break;
-				}
-			}
-		}
+		controlador_evento(evento,boton, rotate,fin, textOn, luzON, t, esc);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
 	} while (!fin);
@@ -204,22 +175,14 @@ int main(int argc, char* argv[]) {
 	SDL_Quit();
 	return 0;
 }
-		controlador_evento(evento,boton, rotate,fin, textOn, luzON, t);
-		//FIN MANEJO DE EVENTOS
-		SDL_GL_SwapWindow(win);
-	} while (!fin);
-	//FIN LOOP PRINCIPAL
-	// LIMPIEZA
-	SDL_GL_DeleteContext(context);
-	SDL_DestroyWindow(win);
-	SDL_Quit();
-	return 0;
-}
-void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON, Timer &t) {
+void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON, Timer &t, escena &esc) {
 	while (SDL_PollEvent(&evento)) {
 		switch (evento.type) {
 		case SDL_MOUSEMOTION:
 			printf("Movimiento del ratón: dx = %d, dy = %d\n", evento.motion.xrel, evento.motion.yrel);
+			//const float x_offset = static_cast<float>(evento.motion.xrel);
+			//const float y_offset = -static_cast<float>(evento.motion.yrel);
+			esc.rotar_camara( static_cast<float>(evento.motion.xrel), -static_cast<float>(evento.motion.yrel));
 			break;
 
 		case SDL_MOUSEBUTTONDOWN:
@@ -242,6 +205,7 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 			fin = true;
 			break;
 		case SDL_KEYUP:
+			esc.mover_jugador(evento);
 			switch (evento.key.keysym.sym) {
 			case SDLK_q:
 				fin = true;
@@ -275,7 +239,11 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 			case SDLK_d:
 				cout << "D Derecha";
 				break;
+			case SDLK_v:
+				esc.cambiar_camara();
+				cout << "CAMBIE";
+				break;
+			}
 			}
 		}
-	}
 	}
