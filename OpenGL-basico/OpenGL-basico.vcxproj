@@ -166,10 +166,13 @@
     <ClCompile Include="velocidades.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="Escena\camara.h" />
     <ClInclude Include="Escena\escena.h" />
     <ClInclude Include="Player\player.h" />
     <ClInclude Include="Utils\vector3.h" />
+=======
+>>>>>>> 95fd2cbfab36e91c77be20d3a8d099a479c290b9
     <ClInclude Include="boton.hpp" />
     <ClInclude Include="manejadorL.h" />
     <ClInclude Include="posicionPer.h" />

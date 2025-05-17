@@ -33,6 +33,7 @@
     <ClCompile Include="..\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Escena\escena.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -59,6 +60,8 @@
     <ClInclude Include="Player\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+=======
+>>>>>>> 95fd2cbfab36e91c77be20d3a8d099a479c290b9
     <ClCompile Include="boton.cpp">
       <Filter>Source Files\botones</Filter>
     </ClCompile>
