@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include <conio.h>
 #include <GL/glu.h>
+#include "OpenGL-basico/boton.hpp"
+#include "OpenGL-basico/manejadorT.h"
+#include "OpenGL-basico/manejadorL.h"
+#include "OpenGL-basico/timer.h"
 #include "OpenGL-basico/Utils/vector3.h"
 #include "OpenGL-basico/Escena/escena.h"
 #include "OpenGL-basico/boton.hpp"
@@ -184,6 +188,81 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 		controlador_evento(evento,boton, rotate,fin, textOn);
+		//FIN MANEJO DE EVENTOS
+		SDL_GL_SwapWindow(win);
+	} while (!fin);
+	//FIN LOOP PRINCIPAL
+	// LIMPIEZA
+	SDL_GL_DeleteContext(context);
+	SDL_DestroyWindow(win);
+	SDL_Quit();
+	return 0;
+}
+void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON, Timer &t) {
+	while (SDL_PollEvent(&evento)) {
+		switch (evento.type) {
+		case SDL_MOUSEMOTION:
+			printf("Movimiento del ratón: dx = %d, dy = %d\n", evento.motion.xrel, evento.motion.yrel);
+			break;
+
+		case SDL_MOUSEBUTTONDOWN:
+
+			if (!boton.contiene(evento.button.x, evento.button.y)) {
+				boton.manejarEvento(evento);
+				boton.onClick();
+			}
+			else {
+				cout << "No clickeado\n";
+			}
+			rotate = true;
+			cout << "ROT\n";
+			break;
+		case SDL_MOUSEBUTTONUP:
+			rotate = false;
+			break;
+		
+		case SDL_QUIT:
+			fin = true;
+			break;
+		case SDL_KEYUP:
+			switch (evento.key.keysym.sym) {
+			case SDLK_q:
+				fin = true;
+				break;
+			case SDLK_ESCAPE:
+				fin = true;
+				break;
+			case SDLK_l:
+				textOn = !textOn;
+				break;
+			case SDLK_RIGHT:
+				break;
+			case SDLK_p:
+				cout << "abrir menu";
+				break;
+			case SDLK_g:
+				luzON = !luzON;
+				cout << "G luz";
+				break;
+			case SDLK_w:
+				cout << "Arriba"<<endl;
+				t.start();
+				break;
+			case SDLK_a:
+				cout << "Izquierda"<< endl;
+				cout << "tiempo: " << t.getSeconds() << endl;
+				break;
+			case SDLK_s:
+				cout << "S Abajo";
+				break;
+			case SDLK_d:
+				cout << "D Derecha";
+				break;
+			}
+		}
+	}
+	}
+		controlador_evento(evento,boton, rotate,fin, textOn, luzON, t);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
 	} while (!fin);
