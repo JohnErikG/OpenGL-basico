@@ -1,0 +1,53 @@
+#include "player.h"
+
+player::player(const vector3& posicion_inicial, const vector3& direccion, const vector3& up, const int segmentos)
+ {
+    direccion_ = direccion;
+    up_ = up;
+    segmentos_ = segmentos;
+    for (int i = 0; i < segmentos_; i++) {
+        cuerpo_.push_back(posicion_inicial + vector3(-1, 0, 0) * i);
+    }
+
+}
+
+const std::vector<vector3>& player::get_cuerpo() const {
+    return cuerpo_;
+}
+
+vector3 player::get_direccion() const {
+    return direccion_;
+}
+
+vector3 player::get_up() const {
+    return up_;
+}
+
+int player::get_segmentos() const {
+    return segmentos_;
+}
+
+
+void player::set_direccion(const vector3& direccion) {
+    direccion_ = direccion;
+}
+
+void player::set_up(const vector3& up) {
+    up_ = up;
+}
+
+void player::mover() {
+
+    // Muevo la cabeza
+    vector3 nueva_cabeza = cuerpo_.front() + direccion_ * velocidad_;
+
+    // Mover cada segmento al lugar del anterior
+    for (int i = segmentos_ - 1; i > 0; --i) {
+        cuerpo_[i] = cuerpo_[i - 1];
+    }
+    cuerpo_[0] = nueva_cabeza;
+}
+
+void player::set_segmentos(int segmentos) {
+    segmentos_ = segmentos;
+}
