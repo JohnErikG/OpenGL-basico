@@ -38,6 +38,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>..\Freeimage;..\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
@@ -84,7 +87,6 @@
     <ClCompile Include="cargadorT.cpp" />
     <ClCompile Include="manejadorL.cpp" />
     <ClCompile Include="manejadorT.cpp" />
-    <ClCompile Include="posicionPer.cpp" />
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="Texturas.cpp" />
     <ClCompile Include="luces.cpp" />
@@ -94,7 +96,6 @@
   <ItemGroup>
     <ClInclude Include="boton.hpp" />
     <ClInclude Include="manejadorL.h" />
-    <ClInclude Include="posicionPer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="Texturas.h" />
