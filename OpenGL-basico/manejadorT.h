@@ -6,13 +6,15 @@ class manejadorT
 {
 	static manejadorT* instance;
 
-	Texturas imagenMuestra;
-	explicit  manejadorT() : imagenMuestra(cargadorT::cargarTextura ("../canon.png"))
+	Texturas imagenMuestra, texturaSuelo;
+	explicit  manejadorT() : imagenMuestra(cargadorT::cargarTextura("../canon.png")), 
+							 texturaSuelo(cargadorT::cargarTextura("../Texturas/tierra.jpg"))
 	{
 	}
 public:
 
 	static void init();
 	static Texturas imagenM();
+	static Texturas texturaS();
 };
 

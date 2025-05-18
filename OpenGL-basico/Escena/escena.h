@@ -3,6 +3,7 @@
 #include "SDL_opengl.h"
 #include "../Escena/camara.h"
 #include "../Player/player.h"
+#include "../manejadorT.h"
 
 enum modo_camara
 {

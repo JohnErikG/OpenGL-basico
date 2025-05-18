@@ -2,5 +2,5 @@
 
 GLuint Texturas::getId() const
 {
-	return id;
+	return id_;
 }

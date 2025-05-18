@@ -4,8 +4,12 @@
 #include "SDL_opengl.h"
 #include <GL/glu.h>
 #include <iostream>
+#include "../manejadorT.h"
+
+
 
 void escena::drawCube(GLuint textura) {
+   
 
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, textura);
@@ -162,12 +166,12 @@ void escena::dibujar_jugador(bool primera_persona) {
     if (!primera_persona) {
         vector3 cabeza = jugador_->get_cuerpo()[0];
         glPushMatrix();
-
+    
         // Mover a la posición del segmento
         glTranslatef(cabeza.get_x(), cabeza.get_y(), cabeza.get_z());
 
         // Dibujar cubo
-        drawCube(1);
+        drawCube(manejadorT::texturaS().getId());
 
         glPopMatrix();
     }
@@ -180,7 +184,7 @@ void escena::dibujar_jugador(bool primera_persona) {
         glTranslatef(segmento.get_x(), segmento.get_y(), segmento.get_z());
 
         // Dibujar cubo
-        drawCube(1);
+        drawCube(manejadorT::texturaS().getId());
 
         glPopMatrix();
     

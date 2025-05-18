@@ -3,11 +3,19 @@
 manejadorT* manejadorT::instance = nullptr;
 void manejadorT::init()
 {
-		instance = new manejadorT();
+	if (instance != nullptr) {
+		return;
+	}
+	instance = new manejadorT();
 }
 
 Texturas manejadorT::imagenM()
 {
 	return	instance->imagenMuestra;
 
+}
+
+Texturas manejadorT::texturaS()
+{
+	return instance->texturaSuelo;
 }

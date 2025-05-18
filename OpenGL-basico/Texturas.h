@@ -8,10 +8,10 @@
 #include <GL/glu.h>
 class Texturas
 {
-	GLuint id;
+	GLuint id_;
 
 public:
-    explicit Texturas(const GLuint id) : id(id)
+    explicit Texturas(const GLuint id) : id_(id)
     {
     }
     GLuint getId() const;

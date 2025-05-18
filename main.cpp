@@ -46,29 +46,30 @@ int main(int argc, char* argv[]) {
 	//TEXTURA
 	manejadorT::init();
 	manejadorL::init();
-	char* archivo = new char[30];
-	archivo = "../Texturas/tierra.jpg";
+	//char* archivo = new char[30];
+	//archivo = "../Texturas/tierra.jpg";
 
 
-	//CARGAR IMAGEN
-	FREE_IMAGE_FORMAT fif = FreeImage_GetFIFFromFilename(archivo);
-	FIBITMAP* bitmap = FreeImage_Load(fif, archivo);
-	bitmap = FreeImage_ConvertTo24Bits(bitmap);
-	int w = FreeImage_GetWidth(bitmap);
-	int h = FreeImage_GetHeight(bitmap);
-	void* datos = FreeImage_GetBits(bitmap);
-	//FIN CARGAR IMAGEN
+	//////CARGAR IMAGEN
+	//FREE_IMAGE_FORMAT fif = FreeImage_GetFIFFromFilename(archivo);
+	//FIBITMAP* bitmap = FreeImage_Load(fif, archivo);
+	//bitmap = FreeImage_ConvertTo24Bits(bitmap);
+	//int w = FreeImage_GetWidth(bitmap);
+	//int h = FreeImage_GetHeight(bitmap);
+	//void* datos = FreeImage_GetBits(bitmap);
+	////FIN CARGAR IMAGEN
 
-	GLuint textura;
-	glGenTextures(1, &textura);
-	glBindTexture(GL_TEXTURE_2D, textura);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_BGR, GL_UNSIGNED_BYTE, datos);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
+	//GLuint textura;
+	//glGenTextures(1, &textura);
+	//glBindTexture(GL_TEXTURE_2D, textura);
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_BGR, GL_UNSIGNED_BYTE, datos);
+	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	//
+	
 	escena esc;
 
 
@@ -115,7 +116,6 @@ int main(int argc, char* argv[]) {
 			manejadorL::luz2M().activarLuz(GL_LIGHT1);
 
 		}
-		SDL_ShowCursor(SDL_ENABLE);
 		esc.actualizar_escena();
 
 		if (rotate) {
@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
 		//DIBUJO TRIANGULO CON TEXTURA
 		if (textOn){
 			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, manejadorT::imagenM().getId());
+			glBindTexture(GL_TEXTURE_2D, manejadorT::texturaS().getId());
 		}
 		glBegin(GL_TRIANGLES);
 			glColor3f(1.0, 1.0, 1.0);
