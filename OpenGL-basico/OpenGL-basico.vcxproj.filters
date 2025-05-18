@@ -28,6 +28,9 @@
     <Filter Include="Source Files\personaje">
       <UniqueIdentifier>{d62e2fb5-ef12-4462-b10e-e5c1a9393965}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\objetosgeometricos">
+      <UniqueIdentifier>{b3c52ac5-1b4c-418d-bb13-dafdf618325b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\main.cpp">
@@ -44,6 +47,12 @@
     </ClCompile>
     <ClCompile Include="Player\player.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gamehub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rectangulo.cpp">
+      <Filter>Source Files\objetosgeometricos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +86,6 @@
     <ClCompile Include="manejadorL.cpp">
       <Filter>Source Files\luces</Filter>
     </ClCompile>
-    <ClCompile Include="posicionPer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="settings.cpp">
       <Filter>Source Files\menu</Filter>
     </ClCompile>
@@ -89,6 +95,12 @@
     <ClCompile Include="timer.cpp">
       <Filter>Source Files\menu</Filter>
     </ClCompile>
+    <ClInclude Include="gamehub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rectangulo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boton.hpp">
@@ -110,9 +122,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="posicionPer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="settings.h">

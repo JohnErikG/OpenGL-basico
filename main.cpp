@@ -14,7 +14,7 @@
 #include "OpenGL-basico/timer.h"
 using namespace std;
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
-void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, Timer &t, escena &esc);
+void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, escena &esc);
 
 
 int main(int argc, char* argv[]) {
@@ -46,6 +46,8 @@ int main(int argc, char* argv[]) {
 	//TEXTURA
 	manejadorT::init();
 	manejadorL::init();
+	Timer::init();
+
 	//char* archivo = new char[30];
 	//archivo = "../Texturas/tierra.jpg";
 
@@ -84,7 +86,7 @@ int main(int argc, char* argv[]) {
 	y = 0;
 	z = 5;
 	float degrees = 0;
-	Timer t = Timer();
+	
 	
 	/*GLfloat luz_posicion[4] = { 0, 0, 1, 1 };*/
 	//GLfloat luz_posicion1[4] = { 0, 0, -1, 1 };
@@ -164,7 +166,7 @@ int main(int argc, char* argv[]) {
 		//FIN DIBUJAR OBJETOS
 
 
-		controlador_evento(evento,boton, rotate,fin, textOn, luzON, t, esc);
+		controlador_evento(evento,boton, rotate,fin, textOn, luzON, esc);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
 	} while (!fin);
@@ -175,7 +177,7 @@ int main(int argc, char* argv[]) {
 	SDL_Quit();
 	return 0;
 }
-void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON, Timer &t, escena &esc) {
+void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON, escena &esc) {
 	while (SDL_PollEvent(&evento)) {
 		switch (evento.type) {
 		case SDL_MOUSEMOTION:
@@ -227,11 +229,11 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 				break;
 			case SDLK_w:
 				cout << "Arriba"<<endl;
-				t.start();
+				Timer::start();
 				break;
 			case SDLK_a:
 				cout << "Izquierda"<< endl;
-				cout << "tiempo: " << t.getSeconds() << endl;
+				cout << "tiempo: " << Timer::getSeconds() << endl;
 				break;
 			case SDLK_s:
 				cout << "S Abajo";

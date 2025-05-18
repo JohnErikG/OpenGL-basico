@@ -147,8 +147,10 @@
   <ItemGroup>
     <ClCompile Include="boton.cpp" />
     <ClCompile Include="cargadorT.cpp" />
+    <ClCompile Include="gamehub.cpp" />
     <ClCompile Include="manejadorL.cpp" />
     <ClCompile Include="manejadorT.cpp" />
+    <ClCompile Include="rectangulo.cpp" />
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="Texturas.cpp" />
     <ClCompile Include="luces.cpp" />
@@ -157,7 +159,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boton.hpp" />
+    <ClInclude Include="gamehub.h" />
     <ClInclude Include="manejadorL.h" />
+    <ClInclude Include="rectangulo.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="Texturas.h" />

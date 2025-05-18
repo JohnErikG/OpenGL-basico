@@ -1,66 +1,71 @@
 #include "Timer.h"
+Timer* Timer::instance = nullptr;
+void Timer::init() { 
+    if (Timer::instance == nullptr) {
+        Timer::instance = new Timer();
+	}
+	
 
-Timer::Timer()
-    : startTicks(0), pausedTicks(0), started(false), paused(false) {
 }
 
+
 void Timer::start() {
-    started = true;
-    paused = false;
-    startTicks = SDL_GetTicks();
-    pausedTicks = 0;
+    instance->started = true;
+    instance->paused = false;
+    instance->startTicks = SDL_GetTicks();
+    instance->pausedTicks = 0;
 }
 
 void Timer::stop() {
-    started = false;
-    paused = false;
-    startTicks = 0;
-    pausedTicks = 0;
+    instance->started = false;
+    instance->paused = false;
+    instance->startTicks = 0;
+    instance->pausedTicks = 0;
 }
 
 void Timer::pause() {
-    if (started && !paused) {
-        paused = true;
-        pausedTicks = SDL_GetTicks() - startTicks;
-        startTicks = 0;
+    if (instance->started && !instance->paused) {
+        instance->paused = true;
+        instance->pausedTicks = SDL_GetTicks() - instance->startTicks;
+        instance->startTicks = 0;
     }
 }
 
 void Timer::resume() {
-    if (started && paused) {
-        paused = false;
-        startTicks = SDL_GetTicks() - pausedTicks;
-        pausedTicks = 0;
+    if (instance->started && instance->paused) {
+        instance->paused = false;
+        instance->startTicks = SDL_GetTicks() - instance->pausedTicks;
+        instance->pausedTicks = 0;
     }
 }
 
 void Timer::reset() {
-    startTicks = 0;
-    pausedTicks = 0;
-    started = false;
-    paused = false;
+    instance->startTicks = 0;
+    instance->pausedTicks = 0;
+    instance->started = false;
+    instance->paused = false;
 }
 
-Uint32 Timer::getTicks() const {
-    if (!started) return 0;
+Uint32 Timer::getTicks() {
+    if (!instance->started) return 0;
 
-    if (paused) {
-        return pausedTicks;
+    if (instance->paused) {
+        return  instance->pausedTicks;
     }
     else {
-        return SDL_GetTicks() - startTicks;
+        return SDL_GetTicks() - instance->startTicks;
     }
 }
 
-bool Timer::isStarted() const {
-    return started;
+bool Timer::isStarted()  {
+    return  instance->started;
 }
 
-bool Timer::isPaused() const {
-    return paused && started;
+bool Timer::isPaused()  {
+    return  instance->paused && instance->started;
 }
 
-Uint32 Timer::getSeconds() const
+Uint32 Timer::getSeconds() 
 {
     return getTicks() / 1000;
 }
