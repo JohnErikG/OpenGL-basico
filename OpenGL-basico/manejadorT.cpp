@@ -20,44 +20,44 @@ Texturas manejadorT::texturaS()
 	return instance->texturaSuelo;
 }
 
-Texturas manejadorT::uno()
+const Texturas manejadorT::uno()
 {
 	return instance->unoT;
 }
 
-Texturas manejadorT::dos()
+const Texturas manejadorT::dos()
 {
 	return instance->dosT;
 }
-Texturas manejadorT::tres()
+const Texturas manejadorT::tres()
 {
 	return instance->tresT;
 }
-Texturas manejadorT::cuatro()
+const Texturas manejadorT::cuatro()
 {
 	return instance->cuatroT;
 }
-Texturas manejadorT::cinco()
+const Texturas manejadorT::cinco()
 {
 	return instance->cincoT;
 }
-Texturas manejadorT::seis()
+const Texturas manejadorT::seis()
 {
 	return instance->seisT;
 }
-Texturas manejadorT::siete()
+const Texturas manejadorT::siete()
 {
 	return instance->sieteT;
 }
-Texturas manejadorT::ocho()
+const Texturas manejadorT::ocho()
 {
 	return instance->ochoT;
 }
-Texturas manejadorT::nueve()
+const Texturas manejadorT::nueve()
 {
 	return instance->nueveT;
 }
-Texturas manejadorT::cero()
+const Texturas manejadorT::cero()
 {
 	return instance->ceroT;
 }

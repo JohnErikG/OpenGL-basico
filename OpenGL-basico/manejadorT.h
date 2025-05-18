@@ -6,7 +6,8 @@ class manejadorT
 {
 	static manejadorT* instance;
 
-	Texturas imagenMuestra, texturaSuelo, unoT, dosT, tresT, cuatroT, cincoT, seisT, sieteT , ochoT , nueveT, ceroT;
+	Texturas imagenMuestra, texturaSuelo;
+	const Texturas unoT, dosT, tresT, cuatroT, cincoT, seisT, sieteT, ochoT, nueveT, ceroT;
 	explicit  manejadorT() : imagenMuestra(cargadorT::cargarTextura("../canon.png")), 
 							 texturaSuelo(cargadorT::cargarTextura("../Texturas/tierra.jpg"))
 		, unoT(cargadorT::cargarTextura("../Texturas/uno.png")), dosT(cargadorT::cargarTextura("../Texturas/dos.png")), tresT(cargadorT::cargarTextura("../Texturas/tres.png")), 
@@ -20,16 +21,16 @@ public:
 	static void init();
 	static Texturas imagenM();
 	static Texturas texturaS();
-	static Texturas uno();
-	static Texturas dos();
-	static Texturas tres();
-	static Texturas cuatro();
-	static Texturas cinco();
-	static Texturas seis();
-	static Texturas siete();
-	static Texturas ocho();
-	static Texturas nueve();
-	static Texturas cero();
+	const static Texturas uno();
+	const static Texturas dos();
+	const static Texturas tres();
+	const static Texturas cuatro();
+	const static Texturas cinco();
+	const static Texturas seis();
+	const static Texturas siete();
+	const static Texturas ocho();
+	const static Texturas nueve();
+	const static Texturas cero();
 
 };
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "manejadorT.h"
 #include "rectangulo.h"
-
+#include "Texturas.h"
 
 class gamehub
 {
@@ -17,13 +17,14 @@ class gamehub
 	explicit gamehub() = default;
 
 public:	
+	void dibujarNumeros(const rectangulo& rec,const Texturas &tex  );
 	static gamehub* getInstance();
 	static void init();
 	void update();
 	void render();
 	void cleanup();
-	static void DibujarTiempo(const Uint32 milisegundos);
-	static void setTiempo(Uint32 num , rectangulo pos );
+	 void DibujarTiempo(const Uint32 milisegundos);
+	 void setTiempo(Uint32 num , rectangulo pos );
 
 };
 
