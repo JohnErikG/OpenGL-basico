@@ -12,6 +12,7 @@
 #include "OpenGL-basico/manejadorT.h"
 #include "OpenGL-basico/manejadorL.h"
 #include "OpenGL-basico/timer.h"
+#include "OpenGL-basico/gamehub.h"
 using namespace std;
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
 void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, escena &esc);
@@ -47,6 +48,8 @@ int main(int argc, char* argv[]) {
 	manejadorT::init();
 	manejadorL::init();
 	Timer::init();
+	gamehub::init();
+
 
 	//char* archivo = new char[30];
 	//archivo = "../Texturas/tierra.jpg";
@@ -99,7 +102,8 @@ int main(int argc, char* argv[]) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
-
+		gamehub::getInstance()->DibujarTiempo(Timer::getSeconds());
+		
 		//PRENDO LA LUZ (SIEMPRE DESPUES DEL gluLookAt)
 		//glEnable(GL_LIGHT0); // habilita la luz 0
 		//glLightfv(GL_LIGHT0, GL_POSITION, luz_posicion);
@@ -150,8 +154,8 @@ int main(int argc, char* argv[]) {
 			glVertex3f(2., 1., 0.);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
-		Boton boton(0, 0, 1, 1,0.1, 0.1 ,0.1);	
-		boton.dibujar();
+		Boton boton(0.1, 0.1, 0.1,0.1, 0.1 ,0.1,0);	
+		//boton.dibujar();
 		//DIBUJO TRIANGULO CON LUZ
 		glEnable(GL_LIGHTING);
 		glBegin(GL_TRIANGLES);
@@ -161,8 +165,23 @@ int main(int argc, char* argv[]) {
 			glVertex3f(-2., 1., 0.);
 		glEnd();
 		glDisable(GL_LIGHTING);
-		
+		glLineWidth(2.0f);
+		glBegin(GL_LINES);
 
+		// Eje X - rojo
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(-10.0f, 0.0f, 0.0f);
+		glVertex3f(10.0f, 0.0f, 0.0f);
+
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(0.0f, -10.0f, 0.0f);
+		glVertex3f(0.0f, 10.0f, 0.0f);
+		// Eje Z - azul
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glVertex3f(0.0f, 0.0f, -10.0f);
+		glVertex3f(0.0f, 0.0f, 10.0f);
+
+		glEnd();
 		//FIN DIBUJAR OBJETOS
 
 
@@ -189,7 +208,7 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 
 		case SDL_MOUSEBUTTONDOWN:
 
-			if (!boton.contiene(evento.button.x, evento.button.y)) {
+			if (boton.contiene(evento.button.x, evento.button.y)) {
 				boton.manejarEvento(evento);
 				boton.onClick();
 			}

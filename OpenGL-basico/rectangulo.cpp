@@ -7,7 +7,7 @@ const vector3& rectangulo::get_a() const
 
 const vector3& rectangulo::get_b() const
 {
-	return a_;
+	return b_;
 }
 
 const vector3& rectangulo::get_c() const
