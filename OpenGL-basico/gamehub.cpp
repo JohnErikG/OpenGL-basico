@@ -46,6 +46,14 @@ void gamehub::DibujarTiempo(const Uint32 segundos )
 
 }
 
+void gamehub::setLevel(int num, rectangulo pos)
+{
+}
+
+void gamehub::DibujarLevel(int num)
+{
+}
+
 
 void gamehub::setTiempo(Uint32 num, rectangulo pos) 
 {

@@ -13,6 +13,7 @@
 #include "OpenGL-basico/manejadorL.h"
 #include "OpenGL-basico/timer.h"
 #include "OpenGL-basico/gamehub.h"
+#include "OpenGL-basico/Settings.h"
 using namespace std;
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
 void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, escena &esc);
@@ -97,13 +98,27 @@ int main(int argc, char* argv[]) {
 	//FIN INICIALIZACION
 	bool textOn = true;
 	bool luzON = false;
+	float vel = 1;
 	//LOOP PRINCIPAL
 	do{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
 		gamehub::getInstance()->DibujarTiempo(Timer::getSeconds());
-		
+		switch (settings::getInstance()->velocidades) {
+		case vel1:
+			vel = 0.5;
+			break;
+		case vel2:
+			vel = 1;
+			break;
+		case vel3:
+			vel = 2;
+			break;
+
+		default: 		break;
+
+		}
 		//PRENDO LA LUZ (SIEMPRE DESPUES DEL gluLookAt)
 		//glEnable(GL_LIGHT0); // habilita la luz 0
 		//glLightfv(GL_LIGHT0, GL_POSITION, luz_posicion);
@@ -112,6 +127,7 @@ int main(int argc, char* argv[]) {
 		//glEnable(GL_LIGHT1); // habilita la luz 1
 		//glLightfv(GL_LIGHT1, GL_POSITION, luz_posicion1);
 		//glLightfv(GL_LIGHT1, GL_DIFFUSE, colorLuz);
+
 		if (luzON) {
 			manejadorL::luz1M().activarLuz(GL_LIGHT0);
 			manejadorL::luz2M().desactivarLuz(GL_LIGHT1);

@@ -54,6 +54,15 @@
     <ClCompile Include="rectangulo.cpp">
       <Filter>Source Files\objetosgeometricos</Filter>
     </ClCompile>
+    <ClCompile Include="menuDeSettings.cpp">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="boton1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Escena\camara.h">
@@ -101,6 +110,15 @@
     <ClInclude Include="rectangulo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="menuDeSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="boton1.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boton.hpp">
@@ -124,7 +142,7 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="settings.h">
+    <ClInclude Include="Settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="velocidades.h">

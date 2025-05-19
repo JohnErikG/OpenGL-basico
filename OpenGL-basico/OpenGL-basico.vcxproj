@@ -146,29 +146,35 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="boton.cpp" />
+    <ClCompile Include="boton1.cpp" />
     <ClCompile Include="cargadorT.cpp" />
     <ClCompile Include="gamehub.cpp" />
     <ClCompile Include="manejadorL.cpp" />
     <ClCompile Include="manejadorT.cpp" />
+    <ClCompile Include="menuDeSettings.cpp" />
     <ClCompile Include="rectangulo.cpp" />
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="Texturas.cpp" />
     <ClCompile Include="luces.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="vector2.cpp" />
     <ClCompile Include="velocidades.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boton.hpp" />
+    <ClInclude Include="boton1.hpp" />
     <ClInclude Include="gamehub.h" />
     <ClInclude Include="manejadorL.h" />
+    <ClInclude Include="menuDeSettings.h" />
     <ClInclude Include="rectangulo.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="settings.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="Texturas.h" />
     <ClInclude Include="cargadorT.h" />
     <ClInclude Include="luces.hpp" />
     <ClInclude Include="manejadorT.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="vector2.h" />
     <ClInclude Include="velocidades.h" />
   </ItemGroup>
   <ItemGroup>
