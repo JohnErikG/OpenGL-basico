@@ -131,16 +131,17 @@ int main(int argc, char* argv[]) {
 
 		//DIBUJAR OBJETOS
 		//DIBUJO TRIANGULO CON COLOR
-		glBegin(GL_TRIANGLES);
+		/*glBegin(GL_TRIANGLES);
 			glColor3f(1.0, 0.0, 0.0);
 			glVertex3f(1., -1., 0.);
 			glVertex3f(-1., -1., 0.);
 			glVertex3f(0., 1., 0.);
 		glEnd();
-		glPopMatrix();
-
+		glPopMatrix();*/
+		Boton boton(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0);
+		//boton.dibujar();
 		//DIBUJO TRIANGULO CON TEXTURA
-		if (textOn){
+		/*if (textOn) {
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, manejadorT::texturaS().getId());
 		}
@@ -164,7 +165,7 @@ int main(int argc, char* argv[]) {
 			glVertex3f(-3., -1., 0.);
 			glVertex3f(-2., 1., 0.);
 		glEnd();
-		glDisable(GL_LIGHTING);
+		glDisable(GL_LIGHTING);*/
 		glLineWidth(2.0f);
 		glBegin(GL_LINES);
 

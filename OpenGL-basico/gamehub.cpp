@@ -88,7 +88,7 @@ void gamehub::setTiempo(Uint32 num, rectangulo pos)
 }
 void gamehub::dibujarNumeros(const rectangulo& rec, const Texturas& tex)
 {
-    glDepthFunc(GL_ALWAYS);
+
     glBindTexture(GL_TEXTURE_2D, tex.getId());
     glBegin(GL_QUADS);
    
@@ -105,7 +105,7 @@ void gamehub::dibujarNumeros(const rectangulo& rec, const Texturas& tex)
     glVertex3f(rec.get_d().get_x(), rec.get_d().get_y(), rec.get_d().get_z());
     
     glEnd();
-    glDepthFunc(GL_LESS);
+    
 }
 gamehub* gamehub::getInstance(){
     if (instance == nullptr) {
