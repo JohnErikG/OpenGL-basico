@@ -63,6 +63,9 @@
     <ClCompile Include="boton1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="renderMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Escena\camara.h">
@@ -117,6 +120,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="boton1.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

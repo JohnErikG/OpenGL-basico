@@ -1,9 +1,7 @@
 #pragma once
 
 
-enum colorDeLuces {
-	luz1, luz2, luz3
-};;
+
 
 enum  velocidades {
 	vel1, vel2, vel3
@@ -15,8 +13,8 @@ class settings
 public:
 	velocidades velocidades = vel2;
 	bool wireframe = false, textura = false, facetado = false;
-	colorDeLuces colorDeLuces = luz1;
-
+	bool luz1 = false, luz2 = false, luz3 = false;
+	
 	static settings* getInstance();
 
 };

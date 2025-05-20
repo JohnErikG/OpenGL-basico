@@ -15,6 +15,8 @@ public:
     {
     }
     GLuint getId() const;
-
+    Texturas() : id_(0)
+    {
+    }
 
 };

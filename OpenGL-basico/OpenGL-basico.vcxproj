@@ -153,6 +153,7 @@
     <ClCompile Include="manejadorT.cpp" />
     <ClCompile Include="menuDeSettings.cpp" />
     <ClCompile Include="rectangulo.cpp" />
+    <ClCompile Include="renderMenu.cpp" />
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="Texturas.cpp" />
     <ClCompile Include="luces.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="manejadorL.h" />
     <ClInclude Include="menuDeSettings.h" />
     <ClInclude Include="rectangulo.h" />
+    <ClInclude Include="renderMenu.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Texturas.h" />
