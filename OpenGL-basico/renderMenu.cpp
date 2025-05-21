@@ -99,7 +99,7 @@ void renderMenu::dibujarsettings(menuDeSettings* Mset)
 	glMatrixMode(GL_PROJECTION);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glPushMatrix();
-    glLoadIdentity();
+    //glLoadIdentity();
 	glOrtho(-600, 600, -360, 360, -1, 1);
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, manejadorT::Settings().getId());
