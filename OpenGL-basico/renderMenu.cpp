@@ -34,7 +34,7 @@ void renderMenu::dibujarBotonT(const boton1* bot)
     glTexCoord2f(0, 1);
     glVertex3f(bot->getIzqBx(), bot->getIzqBy(), 1);
     glEnd();
-	glDisable(GL_TEXTURE_2D);
+	
 }
 
 void renderMenu::dibujarBotonF(const boton1* bot)
@@ -50,7 +50,7 @@ void renderMenu::dibujarBotonF(const boton1* bot)
     glTexCoord2f(0, 1);
     glVertex3f(bot->getIzqBx(), bot->getIzqBy(), 1);
     glEnd();
-	glDisable(GL_TEXTURE_2D);
+	
 }
 
 void renderMenu::dibujarGH()
@@ -102,19 +102,19 @@ void renderMenu::dibujarsettings(menuDeSettings* Mset)
     glLoadIdentity();
 	glOrtho(-600, 600, -360, 360, -1, 1);
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, manejadorT::fondo().getId());
+	glBindTexture(GL_TEXTURE_2D, manejadorT::Settings().getId());
 	glBegin(GL_QUADS);
 
 	glTexCoord2f(0, 0);
-	glVertex3f(-400, -300, 0);
+	glVertex3f(-400, -250, 0);
 
 	glTexCoord2f(1, 0);
-	glVertex3f(400, -300, 0);
+	glVertex3f(400, -250, 0);
 
 	glTexCoord2f(1, 1);
-	glVertex3f(400, 300, 0);
+	glVertex3f(400, 250, 0);
 	glTexCoord2f(0, 1);
-	glVertex3f(-400, 300, 0);
+	glVertex3f(-400, 250, 0);
 	glEnd();
 	for (const auto bot: Mset->getBotones()) dibujarBoton( bot );
 	glDisable(GL_TEXTURE_2D);

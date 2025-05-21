@@ -76,3 +76,8 @@ const Texturas manejadorT::cero()
 {
 	return instance->ceroT;
 }
+
+Texturas manejadorT::Settings()
+{
+	return instance->TextSettings;
+}
