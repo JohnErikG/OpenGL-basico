@@ -105,3 +105,13 @@ GLuint boton1::get_textura2() const
 {
 	return tex2.getId();
 }
+
+bool boton1::get_click() const
+{
+	return click;
+}
+
+void boton1::set_click(bool click_)
+{
+	click = click_;
+}

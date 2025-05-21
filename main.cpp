@@ -14,6 +14,7 @@
 #include "OpenGL-basico/timer.h"
 #include "OpenGL-basico/gamehub.h"
 #include "OpenGL-basico/Settings.h"
+#include "OpenGL-basico/renderMenu.h"
 using namespace std;
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
 void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, escena &esc);
@@ -50,32 +51,9 @@ int main(int argc, char* argv[]) {
 	manejadorL::init();
 	Timer::init();
 	gamehub::init();
+	settings::getInstance();
+	menuDeSettings::initMs();
 
-
-	//char* archivo = new char[30];
-	//archivo = "../Texturas/tierra.jpg";
-
-
-	//////CARGAR IMAGEN
-	//FREE_IMAGE_FORMAT fif = FreeImage_GetFIFFromFilename(archivo);
-	//FIBITMAP* bitmap = FreeImage_Load(fif, archivo);
-	//bitmap = FreeImage_ConvertTo24Bits(bitmap);
-	//int w = FreeImage_GetWidth(bitmap);
-	//int h = FreeImage_GetHeight(bitmap);
-	//void* datos = FreeImage_GetBits(bitmap);
-	////FIN CARGAR IMAGEN
-
-	//GLuint textura;
-	//glGenTextures(1, &textura);
-	//glBindTexture(GL_TEXTURE_2D, textura);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_BGR, GL_UNSIGNED_BYTE, datos);
-	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	//
-	
 	escena esc;
 
 
@@ -102,8 +80,8 @@ int main(int argc, char* argv[]) {
 	//LOOP PRINCIPAL
 	do{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glLoadIdentity();
-		gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
+		//glLoadIdentity();
+		//gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
 		gamehub::getInstance()->DibujarTiempo(Timer::getSeconds());
 		switch (settings::getInstance()->velocidades) {
 		case vel1:
@@ -138,12 +116,13 @@ int main(int argc, char* argv[]) {
 			manejadorL::luz2M().activarLuz(GL_LIGHT1);
 
 		}
-		esc.actualizar_escena();
+		renderMenu::dibujarsettings(menuDeSettings::initMs());
+		//esc.actualizar_escena();
 
-		if (rotate) {
-			degrees = degrees + 0.5f;
-		}
-		glRotatef(degrees, 0.0, 1.0, 0.0);
+		//if (rotate) {
+		//	degrees = degrees + 0.5f;
+		//}
+		//glRotatef(degrees, 0.0, 1.0, 0.0);
 
 		//DIBUJAR OBJETOS
 		//DIBUJO TRIANGULO CON COLOR

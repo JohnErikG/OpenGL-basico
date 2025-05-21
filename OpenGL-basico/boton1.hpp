@@ -1,15 +1,19 @@
 #pragma once
 #include "vector2.h"
 #include "texturas.h"
+#include "manejadorT.h"
+
 class boton1
 {
-	Texturas tex;	
-	Texturas tex2;
+	bool click = false;
+	Texturas  tex= manejadorT::botont();	
+	Texturas tex2 = manejadorT::botonf();
 	vector2 Ader, BIzq;
-	explicit boton1(const vector2& derecha_, const vector2& Izquierda_, const Texturas& tex_, const Texturas& tex2_) : Ader(derecha_), BIzq(Izquierda_), tex(tex_), tex2(tex2_) {}
+	
 	public :
 		virtual ~boton1() = default;
-		boton1() : Ader(vector2()), BIzq(vector2()), tex(Texturas()), tex2(Texturas()) {}
+		explicit boton1(const vector2& derecha_, const vector2& Izquierda_) : Ader(derecha_), BIzq(Izquierda_) {}
+		boton1() : Ader(vector2()), BIzq(vector2()) {}
 		bool is_inside(int x, int y)const;
 		float getDerAx()const;
 		float getDerAy()const;
@@ -30,5 +34,7 @@ class boton1
 		void on_clickfaceteado()const;
 		GLuint  get_textura() const;
 		GLuint get_textura2() const;
+		bool get_click() const;
+		void set_click(bool click_);
 };
 

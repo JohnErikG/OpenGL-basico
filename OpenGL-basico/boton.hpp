@@ -20,7 +20,7 @@ public:
     }
 
     virtual ~Boton() = default;
-
+	Boton(const Boton&) = default; 
     virtual void dibujar() const {
         glColor3f(r, g, b);
         glBegin(GL_QUADS);

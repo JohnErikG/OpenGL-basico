@@ -20,6 +20,21 @@ Texturas manejadorT::texturaS()
 	return instance->texturaSuelo;
 }
 
+Texturas manejadorT::botont()
+{
+	return instance->botonT;
+}
+
+Texturas manejadorT::botonf()
+{
+	return instance->botonF;
+}
+
+Texturas manejadorT::fondo()
+{
+	return instance->texturaFondo;
+}
+
 const Texturas manejadorT::uno()
 {
 	return instance->unoT;

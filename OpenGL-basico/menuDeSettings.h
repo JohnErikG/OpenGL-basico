@@ -1,24 +1,26 @@
 #pragma once
-#include "boton.hpp"
+#include "boton1.hpp"
 #include "Texturas.h"
 #include <array>
+#include "manejadorT.h"
 class menuDeSettings
 {
-
-	Boton v1;
-	Boton v2;
-	Boton v3;
-	Boton l1;
-	Boton l2;
-	Boton l3;
-	Boton ware;
-	Boton TexOn;
-	Texturas fondo;
+	static menuDeSettings* instance;
+	boton1 v1;
+	boton1 v2;
+	boton1 v3;
+	boton1 l1;
+	boton1 l2;
+	boton1 l3;
+	boton1 ware;
+	boton1 TexOn;
+	Texturas fondo = manejadorT::texturaS();
 
 public:
 	explicit menuDeSettings(const int width,const  int height);
-	std::array<Boton*, 7> getBotones() const;
+	std::array<boton1*, 8 > getBotones() ;
 	void click(int x, int y);
 	GLuint getTextureId() const;
+	static menuDeSettings* initMs();
 };
 
