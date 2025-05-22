@@ -19,3 +19,12 @@ Texturas manejadorT::texturaS()
 {
 	return instance->texturaSuelo;
 }
+
+Texturas manejadorT::texturaM()
+{
+	return instance->texturaManzana;
+}
+Texturas manejadorT::texturaP()
+{
+	return instance->texturaPlayer;
+}

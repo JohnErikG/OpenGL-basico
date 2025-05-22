@@ -6,6 +6,7 @@ Texturas cargadorT::cargarTextura(const char* archivo)
 	const FREE_IMAGE_FORMAT fif = FreeImage_GetFIFFromFilename(archivo);
 	FIBITMAP* bitmap = FreeImage_Load(fif, archivo);
 	bitmap = FreeImage_ConvertTo24Bits(bitmap);
+	FreeImage_FlipVertical(bitmap);
 	const unsigned int w = FreeImage_GetWidth(bitmap);
 	const unsigned int h = FreeImage_GetHeight(bitmap);
 	const void* datos = FreeImage_GetBits(bitmap);
