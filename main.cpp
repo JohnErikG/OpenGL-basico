@@ -126,7 +126,7 @@ int main(int argc, char* argv[]) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		//gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
-		gamehub::getInstance()->DibujarTiempo(Timer::getSeconds());
+		
 		switch (settings::getInstance()->velocidades) {
 		case vel1:
 			vel = 0.5;
@@ -163,7 +163,7 @@ int main(int argc, char* argv[]) {
 			renderMenu::dibujarsettings(menuDeSettings::initMs());
 		}
 		esc.actualizar_escena();
-
+		gamehub::getInstance()->DibujarTiempo(Timer::getSeconds());
 		//if (rotate) {
 		//	degrees = degrees + 0.5f;
 		//}

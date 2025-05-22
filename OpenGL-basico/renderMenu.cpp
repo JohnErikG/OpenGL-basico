@@ -56,26 +56,22 @@ void renderMenu::dibujarBotonF(const boton1* bot)
 
 void renderMenu::dibujarGH()
 {
-    glDisable(GL_DEPTH_TEST);
-	//glMatrixMode(GL_PROJECTION);
-	//glPushMatrix();
-	//glLoadIdentity();
-	//glOrtho(-1, 1, -1, 1, -1, 1);
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glLoadIdentity();
-	glOrtho(-600, 600, -360, 360, -1, 1);
+	glOrtho(-1200, 1200, -720, 720, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix(); 
+	glPushMatrix();
 	glLoadIdentity();
-	glColor3f(1.0f, 1.0f, 1.0f);
-    const Uint32 time = Timer::getSeconds();
-    gamehub::getInstance()->DibujarTiempo(time);
+
+	const Uint32 time = Timer::getSeconds();
+	gamehub::getInstance()->DibujarTiempo(time);
 	glPopMatrix();
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
+
 }
 void renderMenu::dibujarInicio()
 {
