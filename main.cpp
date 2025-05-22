@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
 
 	escena esc;
 	ManejadorModelos manejadorM;
-
+	
 	modelo manzana = manejadorM.load_model("../Modelos/Apple.obj");
 	printf("Se cargaron %d vertices", manzana.vertices.size());
 	modelo pinchos = manejadorM.load_model("../Modelos/spike.obj");
@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
 	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(12, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
 	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(13, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
 	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(14, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
-
+	
 	bool fin = false;
 	bool rotate = false;
 
