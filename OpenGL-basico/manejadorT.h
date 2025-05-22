@@ -17,8 +17,8 @@ class manejadorT
 		nueveT(cargadorT::cargarTextura("../Texturas/nueve.png")), ceroT(cargadorT::cargarTextura("../Texturas/cero.png")),
 		botonT(cargadorT::cargarTextura("../Texturas/botonTick.jpg")), botonF(cargadorT::cargarTextura("../Texturas/botonX.jpg")),
 		texturaFondo(cargadorT::cargarTextura("../Texturas/fondo.png")), TextSettings(cargadorT::cargarTextura("../Texturas/Settings.png")), 
-		texturaManzana(cargadorT::cargarTextura("../Texturas/Apple_BaseColor.png")),
-		texturaPlayer(cargadorT::cargarTextura("../Texturas/player.jpg"))					 
+		texturaManzana(cargadorT::cargarTexturaM("../Texturas/Apple_BaseColor.png")),
+		texturaPlayer(cargadorT::cargarTexturaM("../Texturas/player.jpg"))					 
 	{
 	}
 public:
