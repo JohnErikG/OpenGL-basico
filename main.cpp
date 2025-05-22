@@ -163,7 +163,7 @@ int main(int argc, char* argv[]) {
 			renderMenu::dibujarsettings(menuDeSettings::initMs());
 		}
 		esc.actualizar_escena();
-		gamehub::getInstance()->DibujarTiempo(Timer::getSeconds());
+		renderMenu::dibujarGH();
 		//if (rotate) {
 		//	degrees = degrees + 0.5f;
 		//}

@@ -11,12 +11,12 @@ class gamehub
 	rectangulo level = rectangulo(vector3 (2.0f, 1.3f,0.0f), vector3(2.0f, 1.3f, 0.0f), vector3(2.0f, 1.15f, 0.0f), vector3(2.0f, 1.15f, 0.0f) );
 
 	//rectangulo minutos_decena_ = rectangulo(vector3(-0.145f, 1.3f, 0.0f), vector3(-0.095f, 1.3f, 0.0f), vector3(-0.095f, 1.15f, 0.0f), vector3(-0.145f, 1.15f, 0.0f));
-	rectangulo minutos_decena_ = rectangulo(vector3(-1.55f, 5.5f, 0.0f), vector3(-0.80f, 5.5f, 0.0f), vector3(-0.80f, 4.8f, 0.0f), vector3(-1.55f, 4.8f, 0.0f));
-	rectangulo minutos_unidades_ = rectangulo(vector3(-0.80f, 5.5f, 0.0f), vector3(-0.05f, 5.5f, 0.0f), vector3(-0.05f, 4.8f, 0.0f), vector3(-0.80f, 4.8f, 0.0f));
+	rectangulo minutos_decena_ = rectangulo(vector3(-215,600, 0.0f), vector3(-115, 600, 0.0f), vector3(-115, 450, 0.0f), vector3(-215, 450, 0.0f));
+	rectangulo minutos_unidades_ = rectangulo(vector3(-115, 600, 0.0f), vector3(-15, 600, 0.0f), vector3(-15, 450, 0.0f), vector3(-115, 450, 0.0f));
 	rectangulo espacio_ = rectangulo(vector3(-0.025f, 1.3f, 0.0f), vector3(0.025f, 1.3f, 0.0f), vector3(0.025f, 1.15f, 0.0f), vector3(-0.025f, 1.15f, 0.0f));
 
-	rectangulo segundos_decena_ = rectangulo(vector3(0.05f, 5.5f, 0.0f), vector3(0.80f, 5.5f, 0.0f), vector3(0.80f, 4.8f, 0.0f), vector3(0.05f, 4.8f, 0.0f));
-	rectangulo segundos_unidades_ = rectangulo(vector3(0.8f, 5.5f, 0.0f), vector3(1.55f, 5.5f, 0.0f), vector3(1.55f, 4.8f, 0.0f), vector3(0.8f, 4.8f, 0.0f));
+	rectangulo segundos_decena_ = rectangulo(vector3(15,600, 0.0f), vector3( 115 , 600, 0.0f), vector3(115, 450, 0.0f), vector3(15, 450, 0.0f));
+	rectangulo segundos_unidades_ = rectangulo(vector3(115, 600, 0.0f), vector3(215, 600, 0.0f), vector3(215, 450, 0.0f), vector3(115, 450, 0.0f));
 	//rectangulo segundos_decena_ = rectangulo(vector3(0.035f, 1.3f, 0.0f), vector3(0.085f, 1.3f, 0.0f), vector3(0.085f, 1.15f, 0.0f), vector3(0.035f, 1.15f, 0.0f));
 	//rectangulo segundos_unidades_ = rectangulo(vector3(0.095f, 1.3f, 0.0f), vector3(0.145f, 1.3f, 0.0f), vector3(0.145f, 1.15f, 0.0f), vector3(0.095f, 1.15f, 0.0f));
 
