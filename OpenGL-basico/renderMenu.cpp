@@ -121,6 +121,8 @@ void renderMenu::dibujarsettings(menuDeSettings* Mset)
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
 	
 
 }
