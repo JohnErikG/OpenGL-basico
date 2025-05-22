@@ -6,7 +6,7 @@ class manejadorT
 {
 	static manejadorT* instance;
 	Texturas botonT, botonF;
-	Texturas imagenMuestra, texturaSuelo;
+	Texturas imagenMuestra, texturaSuelo,texturaManzana, texturaPlayer;
 	Texturas texturaFondo, TextSettings;
 	const Texturas unoT, dosT, tresT, cuatroT, cincoT, seisT, sieteT, ochoT, nueveT, ceroT;
 	explicit  manejadorT() : imagenMuestra(cargadorT::cargarTextura("../canon.png")), 
@@ -16,13 +16,9 @@ class manejadorT
 		seisT(cargadorT::cargarTextura("../Texturas/seis.png")), sieteT(cargadorT::cargarTextura("../Texturas/siete.png")), ochoT(cargadorT::cargarTextura("../Texturas/ocho.png")),
 		nueveT(cargadorT::cargarTextura("../Texturas/nueve.png")), ceroT(cargadorT::cargarTextura("../Texturas/cero.png")),
 		botonT(cargadorT::cargarTextura("../Texturas/botonTick.jpg")), botonF(cargadorT::cargarTextura("../Texturas/botonX.jpg")),
-		texturaFondo(cargadorT::cargarTextura("../Texturas/fondo.png")), TextSettings(cargadorT::cargarTextura("../Texturas/Settings.png"))
-
-	Texturas imagenMuestra, texturaSuelo, texturaManzana, texturaPlayer;
-	explicit  manejadorT() : imagenMuestra(cargadorT::cargarTextura("../Texturas/metal.jpg")), 
-							 texturaSuelo(cargadorT::cargarTextura("../Texturas/tierra.jpg")),
-							 texturaManzana(cargadorT::cargarTextura("../Texturas/Apple_BaseColor.png")),
-							 texturaPlayer(cargadorT::cargarTextura("../Texturas/player.jpg"))
+		texturaFondo(cargadorT::cargarTextura("../Texturas/fondo.png")), TextSettings(cargadorT::cargarTextura("../Texturas/Settings.png")), 
+		texturaManzana(cargadorT::cargarTextura("../Texturas/Apple_BaseColor.png")),
+		texturaPlayer(cargadorT::cargarTextura("../Texturas/player.jpg"))					 
 	{
 	}
 public:

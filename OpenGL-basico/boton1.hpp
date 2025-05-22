@@ -1,5 +1,5 @@
 #pragma once
-#include "vector2.h"
+#include "vector2_2.h"
 #include "texturas.h"
 #include "manejadorT.h"
 
@@ -8,12 +8,12 @@ class boton1
 	bool click = false;
 	Texturas  tex= manejadorT::botont();	
 	Texturas tex2 = manejadorT::botonf();
-	vector2 Ader, BIzq;
+	vector2_2 Ader, BIzq;
 	
 	public :
 		virtual ~boton1() = default;
-		explicit boton1(const vector2& derecha_, const vector2& Izquierda_) : Ader(derecha_), BIzq(Izquierda_) {}
-		boton1() : Ader(vector2()), BIzq(vector2()) {}
+		explicit boton1(const vector2_2& derecha_, const vector2_2& Izquierda_) : Ader(derecha_), BIzq(Izquierda_) {}
+		boton1() : Ader(vector2_2()), BIzq(vector2_2()) {}
 		bool is_inside(int x, int y)const;
 		float getDerAx()const;
 		float getDerAy()const;
