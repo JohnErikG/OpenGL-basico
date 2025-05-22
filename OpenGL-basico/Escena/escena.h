@@ -4,6 +4,8 @@
 #include "../Escena/camara.h"
 #include "../Player/player.h"
 #include "../manejadorT.h"
+#include "entidad.h"
+#include <vector>
 
 enum modo_camara
 {
@@ -23,6 +25,7 @@ class escena final
     modo_camara modo_camara_ = normal;
     camara* camara_;
     player* jugador_;
+    std::vector<entidad> entidades_;
 
     
 
@@ -36,5 +39,6 @@ public:
     modo_camara get_modo_camara() const;
     camara* get_camara() const;
     void dibujar_jugador(bool primera_persona);
-    void escena::drawCube(GLuint textura);
+    void escena::drawCube(GLuint textura, vector3 posicion);
+    void addEntidad(entidad& entidad);
 };

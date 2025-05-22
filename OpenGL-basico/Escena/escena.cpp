@@ -5,78 +5,18 @@
 #include <GL/glu.h>
 #include <iostream>
 #include "../manejadorT.h"
+#include "../Manejador/ManejadorModelos.h"
+#include "entidad.h"
+#include "modelo.h"
+#include <vector>
 
 
 
-void escena::drawCube(GLuint textura) {
+void escena::drawCube(GLuint textura,vector3 posicion) {
    
-
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, textura);
-
-    glBegin(GL_QUADS);
-
-    // Cara frontal
-    glTexCoord2f(0, 0);
-    glVertex3f(-0.5, -0.5, 0.5);
-    glTexCoord2f(1, 0);
-    glVertex3f(0.5, -0.5, 0.5);
-    glTexCoord2f(1, 1);
-    glVertex3f(0.5, 0.5, 0.5);
-    glTexCoord2f(0, 1);
-    glVertex3f(-0.5, 0.5, 0.5);
-
-    // Cara trasera
-    glTexCoord2f(0, 0);
-    glVertex3f(-0.5, -0.5, -0.5);
-    glTexCoord2f(1, 0);
-    glVertex3f(-0.5, 0.5, -0.5);
-    glTexCoord2f(1, 1);
-    glVertex3f(0.5, 0.5, -0.5);
-    glTexCoord2f(0, 1);
-    glVertex3f(0.5, -0.5, -0.5);
-
-    // Cara superior
-    glTexCoord2f(0, 0);
-    glVertex3f(-0.5, 0.5, -0.5);
-    glTexCoord2f(1, 0);
-    glVertex3f(-0.5, 0.5, 0.5);
-    glTexCoord2f(1, 1);
-    glVertex3f(0.5, 0.5, 0.5);
-    glTexCoord2f(0, 1);
-    glVertex3f(0.5, 0.5, -0.5);
-
-    // Cara inferior
-    glTexCoord2f(0, 0);
-    glVertex3f(-0.5, -0.5, -0.5);
-    glTexCoord2f(1, 0);
-    glVertex3f(0.5, -0.5, -0.5);
-    glTexCoord2f(1, 1);
-    glVertex3f(0.5, -0.5, 0.5);
-    glTexCoord2f(0, 1);
-    glVertex3f(-0.5, -0.5, 0.5);
-
-    // Cara derecha
-    glTexCoord2f(0, 0);
-    glVertex3f(0.5, -0.5, -0.5);
-    glTexCoord2f(1, 0);
-    glVertex3f(0.5, 0.5, -0.5);
-    glTexCoord2f(1, 1);
-    glVertex3f(0.5, 0.5, 0.5);
-    glTexCoord2f(0, 1);
-    glVertex3f(0.5, -0.5, 0.5);
-
-    // Cara izquierda
-    glTexCoord2f(0, 0);
-    glVertex3f(-0.5, -0.5, -0.5);
-    glTexCoord2f(1, 0);
-    glVertex3f(-0.5, -0.5, 0.5);
-    glTexCoord2f(1, 1);
-    glVertex3f(-0.5, 0.5, 0.5);
-    glTexCoord2f(0, 1);
-    glVertex3f(-0.5, 0.5, -0.5);
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
+    modelo cubo = ManejadorModelos::load_cube();
+    entidad ecubo = entidad(cubo.vertices, cubo.indices, posicion, vector3(1, 1, 1), textura);
+    ecubo.dibujar();
 }
 
 void escena::cambiar_camara()
@@ -85,7 +25,7 @@ void escena::cambiar_camara()
     {
     case primera_persona:
         modo_camara_ = normal;
-        camara_->set_posicion(vector3(0, 2, 10));
+        camara_->set_posicion(vector3(7.5f, 3.5f, 20));
         camara_->set_direccion(vector3(0,0,-1));
         camara_->set_up(vector3(0, 1, 0));
         camara_->actualizar_angulos_desde_direccion();
@@ -94,7 +34,7 @@ void escena::cambiar_camara()
         {
             modo_camara_ = perspectiva;
             vector3 objetivo = jugador_->get_cuerpo()[jugador_->get_segmentos() / 2];
-            vector3 posicion_camara = objetivo + vector3(0, 5, 5);
+            vector3 posicion_camara = objetivo + vector3(0, 5, 10);
             camara_->set_posicion(posicion_camara);
             camara_->set_direccion((objetivo - posicion_camara).normalize());
             camara_->actualizar_angulos_desde_direccion();
@@ -130,7 +70,7 @@ void escena::rotar_camara(const float x, const float y) const
 
 escena::escena()
 {
-    vector3 pos(0.0f, 2.0f, 10.0f);
+    vector3 pos(7.5f, 3.5f, 20);
     vector3 dir(0.0f, 0.0f, -1.0f);
     vector3 up(0.0f, 1.0f, 0.0f);
     jugador_ = new player;
@@ -157,6 +97,10 @@ void escena::actualizar_escena()
         up.get_x(), up.get_y(), up.get_z()
     );
 
+    for (entidad e: entidades_) {
+        e.dibujar();
+    }
+
     dibujar_jugador(modo_camara_ == primera_persona);
 
 
@@ -164,29 +108,15 @@ void escena::actualizar_escena()
 
 void escena::dibujar_jugador(bool primera_persona) {
     if (!primera_persona) {
+        //Solo renderizo cabeza si no estoy en primera persona
         vector3 cabeza = jugador_->get_cuerpo()[0];
-        glPushMatrix();
-    
-        // Mover a la posición del segmento
-        glTranslatef(cabeza.get_x(), cabeza.get_y(), cabeza.get_z());
-
-        // Dibujar cubo
-        drawCube(manejadorT::texturaS().getId());
-
-        glPopMatrix();
+        drawCube(manejadorT::texturaP().getId(),vector3(cabeza.get_x(), cabeza.get_y(), cabeza.get_z()));
     }
 
     for (int i = 1; i < jugador_->get_segmentos();i++) {
         vector3 segmento = jugador_->get_cuerpo()[i];
-        glPushMatrix();
 
-        // Mover a la posición del segmento
-        glTranslatef(segmento.get_x(), segmento.get_y(), segmento.get_z());
-
-        // Dibujar cubo
-        drawCube(manejadorT::texturaS().getId());
-
-        glPopMatrix();
+        drawCube(manejadorT::texturaP().getId(),vector3(segmento.get_x(), segmento.get_y(), segmento.get_z()));
     
     }
 
@@ -305,3 +235,6 @@ camara* escena::get_camara() const
     return camara_;
 }
 
+void escena::addEntidad(entidad& entidad) {
+    entidades_.push_back(entidad);
+}

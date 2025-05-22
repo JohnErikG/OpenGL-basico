@@ -11,6 +11,7 @@
 #include "OpenGL-basico/boton.hpp"
 #include "OpenGL-basico/manejadorT.h"
 #include "OpenGL-basico/manejadorL.h"
+#include "OpenGL-basico/Manejador/ManejadorModelos.h"
 #include "OpenGL-basico/timer.h"
 #include "OpenGL-basico/gamehub.h"
 #include "OpenGL-basico/Settings.h"
@@ -18,6 +19,7 @@
 using namespace std;
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
 void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, escena &esc, bool &abrirmenu);
+void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, Timer &t, escena &esc);
 
 
 int main(int argc, char* argv[]) {
@@ -32,7 +34,7 @@ int main(int argc, char* argv[]) {
 		SDL_WINDOWPOS_CENTERED,
 		1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 	SDL_GLContext context = SDL_GL_CreateContext(win);
-	SDL_SetRelativeMouseMode(SDL_FALSE);
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_ShowCursor(SDL_ENABLE);
 
 
@@ -55,7 +57,49 @@ int main(int argc, char* argv[]) {
 	menuDeSettings::initMs();
 
 	escena esc;
+	ManejadorModelos manejadorM;
 
+	modelo manzana = manejadorM.load_model("../Modelos/Apple.obj");
+	printf("Se cargaron %d vertices", manzana.vertices.size());
+	modelo pinchos = manejadorM.load_model("../Modelos/spike.obj");
+	printf("Se cargaron %d vertices", pinchos.vertices.size());
+	esc.addEntidad(entidad(manzana.vertices, manzana.indices, vector3(7, 1, 0), vector3(0.01f, 0.01f, 0.01f), manejadorT::texturaM().getId()));
+	esc.addEntidad(entidad(manzana.vertices, manzana.indices, vector3(12, 0, 0), vector3(0.01f, 0.01f, 0.01f), manejadorT::texturaM().getId()));
+	esc.addEntidad(entidad(manzana.vertices, manzana.indices, vector3(8, 3, 0), vector3(0.01f, 0.01f, 0.01f), manejadorT::texturaM().getId()));
+	esc.addEntidad(entidad(pinchos.vertices, pinchos.indices, vector3(5, -1.5f, 0), vector3(0.05f, 0.055f, 0.05f), manejadorT::imagenM().getId()));
+	esc.addEntidad(entidad(pinchos.vertices, pinchos.indices, vector3(5, -1.5f, 0), vector3(0.05f, 0.055f, 0.05f), manejadorT::imagenM().getId()));
+	esc.addEntidad(entidad(pinchos.vertices, pinchos.indices, vector3(11, -0.5f, 0), vector3(0.05f, 0.055f, 0.05f), manejadorT::imagenM().getId()));
+	esc.addEntidad(entidad(pinchos.vertices, pinchos.indices, vector3(12, 3.5f, 0), vector3(0.05f, 0.055f, 0.05f), manejadorT::imagenM().getId()));
+	modelo cubo = ManejadorModelos::load_cube();
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(-1, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(0, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(1, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(2, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(3, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(4, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(6, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(7, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(7, 0, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(8, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(10, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(11, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(12, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(13, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(14, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(10, 0, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(14, 0, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(14, 1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(14, 2, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(10, 2, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(8, 2, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(7, 2, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(6, 2, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(6, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(10, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(11, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(12, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(13, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
+	esc.addEntidad(entidad(cubo.vertices, cubo.indices, vector3(14, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId()));
 
 	bool fin = false;
 	bool rotate = false;
@@ -125,6 +169,7 @@ int main(int argc, char* argv[]) {
 		//}
 		//glRotatef(degrees, 0.0, 1.0, 0.0);
 
+		/*
 		//DIBUJAR OBJETOS
 		//DIBUJO TRIANGULO CON COLOR
 		/*glBegin(GL_TRIANGLES);
@@ -151,8 +196,8 @@ int main(int argc, char* argv[]) {
 			glVertex3f(2., 1., 0.);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
-		Boton boton(0.1, 0.1, 0.1,0.1, 0.1 ,0.1,0);	
-		//boton.dibujar();
+		Boton boton(0, 0, 1, 1,0.1, 0.1 ,0.1);	
+		boton.dibujar();
 		//DIBUJO TRIANGULO CON LUZ
 		glEnable(GL_LIGHTING);
 		glBegin(GL_TRIANGLES);
@@ -197,7 +242,6 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 	while (SDL_PollEvent(&evento)) {
 		switch (evento.type) {
 		case SDL_MOUSEMOTION:
-			printf("Movimiento del ratón: dx = %d, dy = %d\n", evento.motion.xrel, evento.motion.yrel);
 			//const float x_offset = static_cast<float>(evento.motion.xrel);
 			//const float y_offset = -static_cast<float>(evento.motion.yrel);
 			esc.rotar_camara( static_cast<float>(evento.motion.xrel), -static_cast<float>(evento.motion.yrel));

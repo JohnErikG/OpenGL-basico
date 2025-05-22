@@ -17,6 +17,12 @@ class manejadorT
 		nueveT(cargadorT::cargarTextura("../Texturas/nueve.png")), ceroT(cargadorT::cargarTextura("../Texturas/cero.png")),
 		botonT(cargadorT::cargarTextura("../Texturas/botonTick.jpg")), botonF(cargadorT::cargarTextura("../Texturas/botonX.jpg")),
 		texturaFondo(cargadorT::cargarTextura("../Texturas/fondo.png")), TextSettings(cargadorT::cargarTextura("../Texturas/Settings.png"))
+
+	Texturas imagenMuestra, texturaSuelo, texturaManzana, texturaPlayer;
+	explicit  manejadorT() : imagenMuestra(cargadorT::cargarTextura("../Texturas/metal.jpg")), 
+							 texturaSuelo(cargadorT::cargarTextura("../Texturas/tierra.jpg")),
+							 texturaManzana(cargadorT::cargarTextura("../Texturas/Apple_BaseColor.png")),
+							 texturaPlayer(cargadorT::cargarTextura("../Texturas/player.jpg"))
 	{
 	}
 public:
@@ -40,5 +46,7 @@ public:
 	const static Texturas cero();
 	
 
+	static Texturas texturaM();
+	static Texturas texturaP();
 };
 
