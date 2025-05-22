@@ -57,16 +57,22 @@ void renderMenu::dibujarBotonF(const boton1* bot)
 void renderMenu::dibujarGH()
 {
     glDisable(GL_DEPTH_TEST);
+	//glMatrixMode(GL_PROJECTION);
+	//glPushMatrix();
+	//glLoadIdentity();
+	//glOrtho(-1, 1, -1, 1, -1, 1);
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glLoadIdentity();
-	glOrtho(-1, 1, -1, 1, -1, 1);
+	glOrtho(-600, 600, -360, 360, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix(); 
 	glLoadIdentity();
 	glColor3f(1.0f, 1.0f, 1.0f);
     const Uint32 time = Timer::getSeconds();
     gamehub::getInstance()->DibujarTiempo(time);
+	glPopMatrix();
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
@@ -98,10 +104,13 @@ void renderMenu::dibujarBoton(const boton1* bot) {
 void renderMenu::dibujarsettings(menuDeSettings* Mset)
 {
 	glMatrixMode(GL_PROJECTION);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glPushMatrix();
-    glLoadIdentity();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glLoadIdentity();
 	glOrtho(-600, 600, -360, 360, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, manejadorT::Settings().getId());
 	glBegin(GL_QUADS);
@@ -117,12 +126,11 @@ void renderMenu::dibujarsettings(menuDeSettings* Mset)
 	glTexCoord2f(0, 1);
 	glVertex3f(-400, 250, 0);
 	glEnd();
-	for (const auto bot: Mset->getBotones()) dibujarBoton( bot );
+	for (const auto bot : Mset->getBotones()) dibujarBoton(bot);
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
-	
 
 }
