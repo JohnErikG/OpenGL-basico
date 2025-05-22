@@ -17,7 +17,7 @@
 #include "OpenGL-basico/renderMenu.h"
 using namespace std;
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
-void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, escena &esc);
+void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, escena &esc, bool &abrirmenu);
 
 
 int main(int argc, char* argv[]) {
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
 	z = 5;
 	float degrees = 0;
 	
-	
+	bool abrirmenu = false;
 	/*GLfloat luz_posicion[4] = { 0, 0, 1, 1 };*/
 	//GLfloat luz_posicion1[4] = { 0, 0, -1, 1 };
 	/*GLfloat colorLuz[4] = { 1, 0, 0, 0 };*/
@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
 	do{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
-		gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
+		//gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
 		gamehub::getInstance()->DibujarTiempo(Timer::getSeconds());
 		switch (settings::getInstance()->velocidades) {
 		case vel1:
@@ -114,10 +114,11 @@ int main(int argc, char* argv[]) {
 			manejadorL::luz1M().desactivarLuz(GL_LIGHT0);
 
 			manejadorL::luz2M().activarLuz(GL_LIGHT1);
-
 		}
-		renderMenu::dibujarsettings(menuDeSettings::initMs());
-		//esc.actualizar_escena();
+		if (abrirmenu) {
+			renderMenu::dibujarsettings(menuDeSettings::initMs());
+		}
+		esc.actualizar_escena();
 
 		//if (rotate) {
 		//	degrees = degrees + 0.5f;
@@ -181,7 +182,7 @@ int main(int argc, char* argv[]) {
 		//FIN DIBUJAR OBJETOS
 
 
-		controlador_evento(evento,boton, rotate,fin, textOn, luzON, esc);
+		controlador_evento(evento,boton, rotate,fin, textOn, luzON, esc, abrirmenu);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
 	} while (!fin);
@@ -192,7 +193,7 @@ int main(int argc, char* argv[]) {
 	SDL_Quit();
 	return 0;
 }
-void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON, escena &esc) {
+void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON, escena &esc, bool &abrirmanu) {
 	while (SDL_PollEvent(&evento)) {
 		switch (evento.type) {
 		case SDL_MOUSEMOTION:
@@ -236,6 +237,7 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 			case SDLK_RIGHT:
 				break;
 			case SDLK_p:
+				abrirmanu = !abrirmanu;
 				cout << "abrir menu";
 				break;
 			case SDLK_g:

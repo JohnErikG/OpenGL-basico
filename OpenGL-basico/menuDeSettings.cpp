@@ -9,18 +9,19 @@ menuDeSettings::menuDeSettings(const int width, const int height)
 	float coordY = 100;
 
 	v1 = boton1(vector2(-50, 140), vector2(coordX, coordY));
-	//v2 = boton1( vector2(130, 200), vector2(coordX-20, coordY));
-	//v3 = boton1( vector2(0.5f, 0.5f), vector2(coordX, coordY));
-	//l1 = boton1( vector2(0.5f, 0.5f),vector2(coordX, coordY));
-	//l2 = boton1( vector2(0.5f, 0.5f), vector2(coordX, coordY));
-	//l3 = boton1(vector2(0.5f, 0.5f), vector2(coordX, coordY));
-	//ware = boton1( vector2(0.5f, 0.5f), vector2(coordX, coordY));
-	//TexOn = boton1(vector2(0.5f, 0.5f), vector2(coordX, coordY));
+	l1 = boton1( vector2(-50, 65), vector2(coordX, coordY-75));
+	v2 = boton1( vector2(150, 140), vector2(coordX + 200, coordY));
+	l2 = boton1( vector2(150, 65),vector2(coordX+200, coordY-75));
+	v3 = boton1( vector2(335, 140), vector2(coordX+385, coordY));
+	l3 = boton1(vector2(335, 65), vector2(coordX+385, coordY-75));
+	TexOn = boton1(vector2(-160, -15), vector2(coordX-110, coordY-155));
+	ware = boton1(vector2(-160, -90), vector2(coordX - 110, coordY - 230));
+	facetado = boton1(vector2(-160, -170), vector2(coordX - 110, coordY - 310));
 }
 
-std::array<boton1*, 8> menuDeSettings::getBotones() 
+std::array<boton1*, 9> menuDeSettings::getBotones() 
 {
-	return {&v1, &v2 , &v3 , &l1 , &l2 , &l3 , &ware,&TexOn };
+	return {&v1, &v2 , &v3 , &l1 , &l2 , &l3 , &ware,&TexOn,&facetado };
 }
 
 void menuDeSettings::click(int x, int y)

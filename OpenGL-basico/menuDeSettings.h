@@ -14,11 +14,12 @@ class menuDeSettings
 	boton1 l3;
 	boton1 ware;
 	boton1 TexOn;
+	boton1 facetado;
 	Texturas fondo = manejadorT::texturaS();
 
 public:
 	explicit menuDeSettings(const int width,const  int height);
-	std::array<boton1*, 8 > getBotones() ;
+	std::array<boton1*, 9 > getBotones() ;
 	void click(int x, int y);
 	GLuint getTextureId() const;
 	static menuDeSettings* initMs();
