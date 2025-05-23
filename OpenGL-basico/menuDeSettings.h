@@ -16,6 +16,7 @@ class menuDeSettings
 	boton1 TexOn;
 	boton1 facetado;
 	Texturas fondo = manejadorT::texturaS();
+	bool menuActivo = false;
 
 public:
 	explicit menuDeSettings(const int width,const  int height);
@@ -23,5 +24,7 @@ public:
 	void click(int x, int y);
 	GLuint getTextureId() const;
 	static menuDeSettings* initMs();
+	void setMenuActivo(bool activo);
+	bool getMenuActivo() const;
 };
 

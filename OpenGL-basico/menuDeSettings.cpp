@@ -43,3 +43,13 @@ menuDeSettings* menuDeSettings::initMs()
 	}
 	return instance;
 }
+
+void menuDeSettings::setMenuActivo(bool activo)
+{
+	menuActivo = activo;
+}
+
+bool menuDeSettings::getMenuActivo() const
+{
+	return this->menuActivo;
+}

@@ -18,7 +18,7 @@
 #include "OpenGL-basico/renderMenu.h"
 using namespace std;
 float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
-void controlador_evento(SDL_Event &evento, Boton& boton, bool &rotate, bool &fin,bool & textOn, bool &luzON, escena &esc, bool &abrirmenu);
+void controlador_evento(SDL_Event &evento, bool &fin,bool & textOn, bool &luzON, escena &esc );
 
 
 
@@ -59,18 +59,14 @@ int main(int argc, char* argv[]) {
 	escena esc;
 	
 	bool fin = false;
-	bool rotate = false;
-
 	SDL_Event evento;
-
 	float x, y, z;
-
+	bool start = false;
 	x = 0;
 	y = 0;
 	z = 5;
 	float degrees = 0;
 	
-	bool abrirmenu = false;
 	/*GLfloat luz_posicion[4] = { 0, 0, 1, 1 };*/
 	//GLfloat luz_posicion1[4] = { 0, 0, -1, 1 };
 	/*GLfloat colorLuz[4] = { 1, 0, 0, 0 };*/
@@ -108,7 +104,7 @@ int main(int argc, char* argv[]) {
 		//glLightfv(GL_LIGHT1, GL_DIFFUSE, colorLuz);
 
 
-		if (abrirmenu) {
+		if (menuDeSettings::initMs()->getMenuActivo()) {
 			Timer::pause();
 			SDL_SetRelativeMouseMode(SDL_FALSE);
 			renderMenu::dibujarsettings(menuDeSettings::initMs());
@@ -152,7 +148,7 @@ int main(int argc, char* argv[]) {
 			glVertex3f(0., 1., 0.);
 		glEnd();
 		glPopMatrix();*/
-		Boton boton(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0);
+
 		//boton.dibujar();
 		//DIBUJO TRIANGULO CON TEXTURA
 		/*if (textOn) {
@@ -200,7 +196,7 @@ int main(int argc, char* argv[]) {
 		//FIN DIBUJAR OBJETOS
 
 
-		controlador_evento(evento,boton, rotate,fin, textOn, luzON, esc, abrirmenu);
+		controlador_evento(evento,fin, textOn, luzON, esc);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
 	} while (!fin);
@@ -211,7 +207,7 @@ int main(int argc, char* argv[]) {
 	SDL_Quit();
 	return 0;
 }
-void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON, escena &esc, bool &abrirmanu) {
+void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON, escena &esc) {
 	std::array<boton1*, 9> botones = menuDeSettings::initMs()->getBotones();
 	while (SDL_PollEvent(&evento)) {
 		switch (evento.type) {
@@ -226,10 +222,8 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 			if (false) {
 				cout << "Clickeado" << evento.button.x-640 << "\n";
 				cout << "Clickeado" << -evento.button.y + 360<< "\n";
-				boton.manejarEvento(evento);
-				boton.onClick();
 			}
-			if (abrirmanu) {
+			if (menuDeSettings::initMs()->getMenuActivo() ) {
 					//boton.manejarEvento(evento);
 					//boton.onClick();
 				
@@ -279,7 +273,7 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 			}
 			break;
 		case SDL_MOUSEBUTTONUP:
-			rotate = false;
+			
 			break;
 		
 		case SDL_QUIT:
@@ -300,7 +294,7 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 			case SDLK_RIGHT:
 				break;
 			case SDLK_p:
-				abrirmanu = !abrirmanu;
+				menuDeSettings::initMs()->setMenuActivo(!menuDeSettings::initMs()->getMenuActivo());
 				cout << "abrir menu";
 				break;
 			case SDLK_g:

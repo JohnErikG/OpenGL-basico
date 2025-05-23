@@ -77,13 +77,31 @@ void renderMenu::dibujarInicio()
 {
 	// dibujar el menu
 	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glLoadIdentity();
+	glOrtho(-1280, 1280, -720, 720, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
-    glOrtho(-640, 640, -360, 360,-1, 1 );
 	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, manejadorT::fondo().getId());
+	glBegin(GL_QUADS);
 
-    glDisable(GL_TEXTURE_2D);
+	glTexCoord2f(0, 0);
+	glVertex3f(-1280, -720, 0);
+
+	glTexCoord2f(1, 0);
+	glVertex3f(1280, -720, 0);
+
+	glTexCoord2f(1, 1);
+	glVertex3f(1280, 720, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(-1280, 720, 0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 
