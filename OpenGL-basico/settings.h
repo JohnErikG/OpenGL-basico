@@ -13,7 +13,7 @@ class settings
 public:
 	velocidades velocidades = vel2;
 	bool wireframe = false, textura = true, facetado = false;
-	bool luz1 = false, luz2 = false, luz3 = false;
+	bool luz1 = false, luz2 = true, luz3 = false;
 	
 	static settings* getInstance();
 
