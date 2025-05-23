@@ -16,5 +16,10 @@ luces manejadorL::luz2M()
 	return instanceL->luz2;
 }
 
+luces manejadorL::luz3M()
+{
+	return instanceL->luz3;
+}
+
 
 

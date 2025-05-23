@@ -107,21 +107,31 @@ int main(int argc, char* argv[]) {
 		//glLightfv(GL_LIGHT1, GL_POSITION, luz_posicion1);
 		//glLightfv(GL_LIGHT1, GL_DIFFUSE, colorLuz);
 
-		if (luzON) {
+		if (settings::getInstance()->luz1) {
 			manejadorL::luz1M().activarLuz(GL_LIGHT0);
-			manejadorL::luz2M().desactivarLuz(GL_LIGHT1);
+		}else {
+			manejadorL::luz1M().desactivarLuz(GL_LIGHT0);
+		}
+		if (settings::getInstance()->luz2) {
+			manejadorL::luz1M().activarLuz(GL_LIGHT1);
 		}
 		else {
-			manejadorL::luz1M().desactivarLuz(GL_LIGHT0);
-
-			manejadorL::luz2M().activarLuz(GL_LIGHT1);
+			manejadorL::luz1M().desactivarLuz(GL_LIGHT1);
+		}		
+		if (settings::getInstance()->luz3) {
+			manejadorL::luz1M().activarLuz(GL_LIGHT3);
+		}
+		else {
+			manejadorL::luz1M().desactivarLuz(GL_LIGHT3);
 		}
 		if (abrirmenu) {
+			Timer::pause();
 			SDL_SetRelativeMouseMode(SDL_FALSE);
 			renderMenu::dibujarsettings(menuDeSettings::initMs());
 		}
 		else {
 			SDL_SetRelativeMouseMode(SDL_TRUE);
+			Timer::resume();
 		}
 		esc.actualizar_escena();
 		renderMenu::dibujarGH();
@@ -220,7 +230,7 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 			if (abrirmanu) {
 					//boton.manejarEvento(evento);
 					//boton.onClick();
-
+				
 				 if (botones[0]->is_inside(evento.button.x, evento.button.y)) {
 					botones[0]->on_clickvel1();
 					botones[0]->cambiarClick();

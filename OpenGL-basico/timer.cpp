@@ -27,7 +27,6 @@ void Timer::pause() {
     if (instance->started && !instance->paused) {
         instance->paused = true;
         instance->pausedTicks = SDL_GetTicks() - instance->startTicks;
-        instance->startTicks = 0;
     }
 }
 
