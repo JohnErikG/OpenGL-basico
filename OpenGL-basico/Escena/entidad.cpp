@@ -7,7 +7,14 @@ void entidad::set_activa() {
 void entidad::dibujar() const {
     glPushMatrix();
     glEnable(GL_LIGHTING);
-	
+    if (settings::getInstance()->facetado) {
+        glShadeModel(GL_FLAT);
+    } else {
+		glShadeModel(GL_SMOOTH);
+    }
+    if (settings::getInstance()->wireframe) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
     if (settings::getInstance()->textura) {
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
