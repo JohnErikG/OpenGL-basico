@@ -160,7 +160,11 @@ int main(int argc, char* argv[]) {
 			manejadorL::luz2M().activarLuz(GL_LIGHT1);
 		}
 		if (abrirmenu) {
+			SDL_SetRelativeMouseMode(SDL_FALSE);
 			renderMenu::dibujarsettings(menuDeSettings::initMs());
+		}
+		else {
+			SDL_SetRelativeMouseMode(SDL_TRUE);
 		}
 		esc.actualizar_escena();
 		renderMenu::dibujarGH();
@@ -207,23 +211,23 @@ int main(int argc, char* argv[]) {
 			glVertex3f(-2., 1., 0.);
 		glEnd();
 		glDisable(GL_LIGHTING);*/
-		glLineWidth(2.0f);
-		glBegin(GL_LINES);
+		//glLineWidth(2.0f);
+		//glBegin(GL_LINES);
 
-		// Eje X - rojo
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(-10.0f, 0.0f, 0.0f);
-		glVertex3f(10.0f, 0.0f, 0.0f);
+		//// Eje X - rojo
+		//glColor3f(1.0f, 0.0f, 0.0f);
+		//glVertex3f(-10.0f, 0.0f, 0.0f);
+		//glVertex3f(10.0f, 0.0f, 0.0f);
 
-		glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(0.0f, -10.0f, 0.0f);
-		glVertex3f(0.0f, 10.0f, 0.0f);
-		// Eje Z - azul
-		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(0.0f, 0.0f, -10.0f);
-		glVertex3f(0.0f, 0.0f, 10.0f);
+		//glColor3f(0.0f, 1.0f, 0.0f);
+		//glVertex3f(0.0f, -10.0f, 0.0f);
+		//glVertex3f(0.0f, 10.0f, 0.0f);
+		//// Eje Z - azul
+		//glColor3f(0.0f, 0.0f, 1.0f);
+		//glVertex3f(0.0f, 0.0f, -10.0f);
+		//glVertex3f(0.0f, 0.0f, 10.0f);
 
-		glEnd();
+		//glEnd();
 		//FIN DIBUJAR OBJETOS
 
 
@@ -239,6 +243,7 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fin, bool  &textOn, bool &luzON, escena &esc, bool &abrirmanu) {
+	std::array<boton1*, 9> botones = menuDeSettings::initMs()->getBotones();
 	while (SDL_PollEvent(&evento)) {
 		switch (evento.type) {
 		case SDL_MOUSEMOTION:
@@ -249,15 +254,60 @@ void controlador_evento(SDL_Event &evento, Boton &boton, bool  &rotate, bool &fi
 
 		case SDL_MOUSEBUTTONDOWN:
 
-			if (boton.contiene(evento.button.x, evento.button.y)) {
+			if (false) {
+				cout << "Clickeado" << evento.button.x-640 << "\n";
+				cout << "Clickeado" << -evento.button.y + 360<< "\n";
 				boton.manejarEvento(evento);
 				boton.onClick();
 			}
-			else {
-				cout << "No clickeado\n";
+			if (abrirmanu) {
+					//boton.manejarEvento(evento);
+					//boton.onClick();
+
+				 if (botones[0]->is_inside(evento.button.x, evento.button.y)) {
+					botones[0]->on_clickvel1();
+					botones[0]->cambiarClick();
+					botones[1]->set_click(false);
+					botones[2]->set_click(false);
+					cout << "clickeado" << evento.button.x << "\n";
+				}
+				else if (botones[1]->is_inside(evento.button.x, evento.button.y)) {
+					botones[1]->on_clickvel2();
+					botones[1]->cambiarClick();
+					botones[0]->set_click(false);
+					botones[2]->set_click(false);
+				}
+				else if (botones[2]->is_inside(evento.button.x, evento.button.y)) {
+					botones[2]->on_clickvel3();
+					botones[2]->cambiarClick();
+					botones[1]->set_click(false);
+					botones[0]->set_click(false);
+				}
+				else if (botones[3]->is_inside(evento.button.x, evento.button.y)) {
+					botones[3]->on_clickluz1();
+					botones[3]->cambiarClick();
+				}
+				else if (botones[4]->is_inside(evento.button.x, evento.button.y)) {
+					botones[4]->on_clickluz2();
+					botones[4]->cambiarClick();
+				}
+				else if (botones[5]->is_inside(evento.button.x, evento.button.y)) {
+					botones[5]->on_clickluz3();
+					botones[5]->cambiarClick();
+				}
+				else if (botones[6]->is_inside(evento.button.x, evento.button.y)) {
+					botones[6]->on_clickTexOn();
+					botones[6]->cambiarClick();
+				}
+				else if (botones[7]->is_inside(evento.button.x, evento.button.y)) {
+					botones[7]->on_clickwire();
+					botones[7]->cambiarClick();
+				}
+				else if (botones[8]->is_inside(evento.button.x, evento.button.y)) {
+					botones[8]->on_clickfaceteado();
+					botones[8]->cambiarClick();
+				}
 			}
-			rotate = true;
-			cout << "ROT\n";
 			break;
 		case SDL_MOUSEBUTTONUP:
 			rotate = false;

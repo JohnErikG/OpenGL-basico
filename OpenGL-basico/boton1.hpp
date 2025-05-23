@@ -36,5 +36,6 @@ class boton1
 		GLuint get_textura2() const;
 		bool get_click() const;
 		void set_click(bool click_);
+		void cambiarClick();
 };
 

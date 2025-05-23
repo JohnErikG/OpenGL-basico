@@ -15,6 +15,7 @@ menuDeSettings::menuDeSettings(const int width, const int height)
 	v3 = boton1( vector2_2(335, 140), vector2_2(coordX+385, coordY));
 	l3 = boton1(vector2_2(335, 65), vector2_2(coordX+385, coordY-75));
 	TexOn = boton1(vector2_2(-160, -15), vector2_2(coordX-110, coordY-155));
+	TexOn.set_click(true);
 	ware = boton1(vector2_2(-160, -90), vector2_2(coordX - 110, coordY - 230));
 	facetado = boton1(vector2_2(-160, -170), vector2_2(coordX - 110, coordY - 310));
 }

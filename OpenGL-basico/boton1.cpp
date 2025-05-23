@@ -4,8 +4,8 @@
 bool boton1::is_inside(int x, int y) const
 {
 	// Check if the point (x, y) is inside the button's area    
-	const float xf = static_cast<float>(x-640);
-	const float yf = static_cast<float>(y - 360);
+	const float xf = static_cast<float>(x -  640);
+	const float yf = static_cast<float>(-y + 360);
 	const float horizontal = xf <= Ader.getx() && xf >= BIzq.getx();
 	const float vertical = yf >= BIzq.gety() && yf <= Ader.gety();
     return horizontal && vertical ;
@@ -54,6 +54,7 @@ const auto settings = settings::getInstance();
 
 void boton1::on_clickvel1() const
 {
+	
 	settings->velocidades = vel1;
 }
 
@@ -114,4 +115,8 @@ bool boton1::get_click() const
 void boton1::set_click(bool click_)
 {
 	click = click_;
+}
+void boton1::cambiarClick()
+{
+	click = !click;
 }

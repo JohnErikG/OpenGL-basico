@@ -60,7 +60,7 @@ void renderMenu::dibujarGH()
 	glPushMatrix();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glLoadIdentity();
-	glOrtho(-1200, 1200, -720, 720, -1, 1);
+	glOrtho(-1280, 1280, -720, 720, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
@@ -80,7 +80,7 @@ void renderMenu::dibujarInicio()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glPushMatrix();
 	glLoadIdentity();
-    glOrtho(-600, 600, -360, 360,-1, 1 );
+    glOrtho(-640, 640, -360, 360,-1, 1 );
 	glEnable(GL_TEXTURE_2D);
 
     glDisable(GL_TEXTURE_2D);
@@ -103,7 +103,7 @@ void renderMenu::dibujarsettings(menuDeSettings* Mset)
 	glPushMatrix();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glLoadIdentity();
-	glOrtho(-600, 600, -360, 360, -1, 1);
+	glOrtho(-640, 640, -360, 360, -1, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
