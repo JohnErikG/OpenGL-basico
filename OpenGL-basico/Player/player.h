@@ -8,6 +8,7 @@ class player {
     vector3 up_;
     float velocidad_ = 1.0f;
     int segmentos_;
+    bool contacto_;
 
 public:
     explicit player(const vector3& posicion_inicial = vector3(2, 0, 0),
@@ -16,11 +17,16 @@ public:
     const std::vector<vector3>& get_cuerpo() const;
     vector3 get_direccion() const;
     vector3 get_up() const;
+    float get_velocidad() const;
     int get_segmentos() const;
+    bool get_contacto() const;
 
     void set_direccion(const vector3& direccion);
     void set_up(const vector3& up);
     void set_segmentos(const int segmentos);
+    void set_contacto(bool contacto);
 
+    void crecer(const std::vector<vector3>& bloques);
     void mover();
+    void caer();
 };

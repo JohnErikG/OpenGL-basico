@@ -35,10 +35,17 @@ public:
     void cambiar_camara();
     void rotar_camara(float x, float y) const;
     void actualizar_escena();
-    void mover_jugador(const SDL_Event& evento) const;
+    void mover_jugador(const SDL_Event& evento);
     modo_camara get_modo_camara() const;
     camara* get_camara() const;
     void dibujar_jugador(bool primera_persona);
     void escena::drawCube(GLuint textura, vector3 posicion);
-    void addEntidad(entidad& entidad);
+    void addEntidad(const entidad& entidad);
+private:
+    std::vector<entidad> manzanas_;
+    std::vector<vector3> pinchos_;
+    std::vector<vector3> bloques_;
+    void calcular_manzanas();
+    unsigned int calcular_colisiones(const vector3& direccion, const vector3& segmento);
+    void calcular_gravedad();
 };

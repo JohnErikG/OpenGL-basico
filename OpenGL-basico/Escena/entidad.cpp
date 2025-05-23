@@ -1,5 +1,8 @@
 #include "entidad.h"
 
+void entidad::set_activa() {
+    this->activa_ = !this->activa_;
+}
 
 void entidad::dibujar() const {
     glPushMatrix();
