@@ -107,23 +107,7 @@ int main(int argc, char* argv[]) {
 		//glLightfv(GL_LIGHT1, GL_POSITION, luz_posicion1);
 		//glLightfv(GL_LIGHT1, GL_DIFFUSE, colorLuz);
 
-		if (settings::getInstance()->luz1) {
-			manejadorL::luz1M().activarLuz(GL_LIGHT0);
-		}else {
-			manejadorL::luz1M().desactivarLuz(GL_LIGHT0);
-		}
-		if (settings::getInstance()->luz2) {
-			manejadorL::luz1M().activarLuz(GL_LIGHT1);
-		}
-		else {
-			manejadorL::luz1M().desactivarLuz(GL_LIGHT1);
-		}		
-		if (settings::getInstance()->luz3) {
-			manejadorL::luz1M().activarLuz(GL_LIGHT3);
-		}
-		else {
-			manejadorL::luz1M().desactivarLuz(GL_LIGHT3);
-		}
+
 		if (abrirmenu) {
 			Timer::pause();
 			SDL_SetRelativeMouseMode(SDL_FALSE);
@@ -135,6 +119,24 @@ int main(int argc, char* argv[]) {
 		}
 		esc.actualizar_escena();
 		renderMenu::dibujarGH();
+		if (settings::getInstance()->luz1) {
+			manejadorL::luz1M().activarLuz(GL_LIGHT0);
+		}
+		else {
+			manejadorL::luz1M().desactivarLuz(GL_LIGHT0);
+		}
+		if (settings::getInstance()->luz2) {
+			manejadorL::luz2M().activarLuz(GL_LIGHT1);
+		}
+		else {
+			manejadorL::luz2M().desactivarLuz(GL_LIGHT1);
+		}
+		if (settings::getInstance()->luz3) {
+			manejadorL::luz3M().activarLuz(GL_LIGHT2);
+		}
+		else {
+			manejadorL::luz3M().desactivarLuz(GL_LIGHT2);
+		}
 		//if (rotate) {
 		//	degrees = degrees + 0.5f;
 		//}

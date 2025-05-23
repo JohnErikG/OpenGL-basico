@@ -51,10 +51,12 @@ public:
 	void activarLuz(int luz)
 	{
 		GLfloat colorLuz[4] = { r_d, g_d, b_d, 1 };
+
+		GLfloat colorAmbiente[4] = { r_a, g_a, b_a, 1 };
 		glEnable(luz);
 		glLightfv(luz, GL_POSITION, luz_p);
 		glLightfv(luz, GL_DIFFUSE, colorLuz);
-		glLightfv(luz, GL_AMBIENT, colorLuz);
+		glLightfv(luz, GL_AMBIENT, colorAmbiente);
 	}
 	void desactivarLuz(int luz)
 	{

@@ -1,16 +1,23 @@
 #include "entidad.h"
-
+#include "../Settings.h"
 void entidad::set_activa() {
     this->activa_ = !this->activa_;
 }
 
 void entidad::dibujar() const {
     glPushMatrix();
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, textura_);
+    glEnable(GL_LIGHTING);
+	
+    if (settings::getInstance()->textura) {
+        glEnable(GL_TEXTURE_2D);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+        glBindTexture(GL_TEXTURE_2D, textura_);
+       
+    }
+
     glTranslatef(posicion_.get_x(), posicion_.get_y(), posicion_.get_z());
     glScalef(escala_.get_x(), escala_.get_y(), escala_.get_z());
-
+    
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -24,8 +31,10 @@ void entidad::dibujar() const {
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    glDisable(GL_TEXTURE_2D);
-
+	
+    if (settings::getInstance()->textura) {
+        glDisable(GL_TEXTURE_2D);
+	}
+    glDisable(GL_LIGHTING);
     glPopMatrix();
 }

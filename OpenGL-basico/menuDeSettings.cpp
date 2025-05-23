@@ -11,6 +11,7 @@ menuDeSettings::menuDeSettings(const int width, const int height)
 	v1 = boton1(vector2_2(-50, 140), vector2_2(coordX, coordY));
 	l1 = boton1( vector2_2(-50, 65), vector2_2(coordX, coordY-75));
 	v2 = boton1( vector2_2(150, 140), vector2_2(coordX + 200, coordY));
+	v2.set_click(true);
 	l2 = boton1( vector2_2(150, 65),vector2_2(coordX+200, coordY-75));
 	v3 = boton1( vector2_2(335, 140), vector2_2(coordX+385, coordY));
 	l3 = boton1(vector2_2(335, 65), vector2_2(coordX+385, coordY-75));
@@ -22,7 +23,7 @@ menuDeSettings::menuDeSettings(const int width, const int height)
 
 std::array<boton1*, 9> menuDeSettings::getBotones() 
 {
-	return {&v1, &v2 , &v3 , &l1 , &l2 , &l3 , &ware,&TexOn,&facetado };
+	return {&v1, &v2 , &v3 , &l1 , &l2 , &l3 ,&TexOn , & ware,&facetado };
 }
 
 void menuDeSettings::click(int x, int y)
