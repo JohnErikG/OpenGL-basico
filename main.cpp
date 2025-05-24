@@ -153,19 +153,19 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 
 					if (botones[0]->is_inside(evento.button.x, evento.button.y)) {
 						botones[0]->on_clickvel1();
-						botones[0]->cambiarClick();
+						botones[0]->set_click(true);
 						botones[1]->set_click(false);
 						botones[2]->set_click(false);
 					}
 					else if (botones[1]->is_inside(evento.button.x, evento.button.y)) {
 						botones[1]->on_clickvel2();
-						botones[1]->cambiarClick();
+						botones[1]->set_click(true);
 						botones[0]->set_click(false);
 						botones[2]->set_click(false);
 					}
 					else if (botones[2]->is_inside(evento.button.x, evento.button.y)) {
 						botones[2]->on_clickvel3();
-						botones[2]->cambiarClick();
+						botones[2]->set_click(true);
 						botones[1]->set_click(false);
 						botones[0]->set_click(false);
 					}
