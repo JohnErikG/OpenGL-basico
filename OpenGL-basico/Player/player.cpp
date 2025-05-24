@@ -1,4 +1,5 @@
 #include "player.h"
+#include "../settings.h"
 
 player::player(const vector3& posicion_inicial, const vector3& direccion, const vector3& up, const int segmentos)
  {
@@ -49,7 +50,6 @@ void player::set_up(const vector3& up) {
 }
 
 void player::mover() {
-
     // Muevo la cabeza
     vector3 nueva_cabeza = cuerpo_.front() + direccion_ * velocidad_;
 

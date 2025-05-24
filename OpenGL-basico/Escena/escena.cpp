@@ -84,7 +84,7 @@ escena::escena()
     addEntidad(entidad(manzana.vertices, manzana.indices, vector3(8, 3, 0), vector3(0.01f, 0.01f, 0.01f), manejadorT::texturaM().getId(), entidad::manzana));
     addEntidad(entidad(pinchos.vertices, pinchos.indices, vector3(5, -1.5f, 0), vector3(0.05f, 0.055f, 0.05f), manejadorT::imagenM().getId(), entidad::pincho));
     addEntidad(entidad(pinchos.vertices, pinchos.indices, vector3(5, -1.5f, 0), vector3(0.05f, 0.055f, 0.05f), manejadorT::imagenM().getId(), entidad::pincho));
-    addEntidad(entidad(pinchos.vertices, pinchos.indices, vector3(11, -0.5f, 0), vector3(0.05f, 0.055f, 0.05f), manejadorT::imagenM().getId(), entidad::pincho));
+    addEntidad(entidad(pinchos.vertices, pinchos.indices, vector3(13, -0.5f, 0), vector3(0.05f, 0.055f, 0.05f), manejadorT::imagenM().getId(), entidad::pincho));
     addEntidad(entidad(pinchos.vertices, pinchos.indices, vector3(12, 3.5f, 0), vector3(0.05f, 0.055f, 0.05f), manejadorT::imagenM().getId(), entidad::pincho));
     modelo cubo = ManejadorModelos::load_cube();
     addEntidad(entidad(cubo.vertices, cubo.indices, vector3(-1, -1, 0), vector3(1, 1, 1), manejadorT::texturaS().getId(), entidad::piso));

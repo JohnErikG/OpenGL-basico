@@ -17,8 +17,8 @@
 #include "OpenGL-basico/Settings.h"
 #include "OpenGL-basico/renderMenu.h"
 using namespace std;
-float cubeX = 0.0f, cubeY = 0.0f, cubeZ = -5.0f;
-void controlador_evento(SDL_Event &evento, bool &fin,bool & textOn, bool &luzON, escena &esc );
+
+void controlador_evento(SDL_Event &evento, bool &fin,bool & textOn, bool &luzON, escena &esc, bool  &start );
 
 
 
@@ -67,9 +67,7 @@ int main(int argc, char* argv[]) {
 	z = 5;
 	float degrees = 0;
 	
-	/*GLfloat luz_posicion[4] = { 0, 0, 1, 1 };*/
-	//GLfloat luz_posicion1[4] = { 0, 0, -1, 1 };
-	/*GLfloat colorLuz[4] = { 1, 0, 0, 0 };*/
+
 	//FIN INICIALIZACION
 	bool textOn = true;
 	bool luzON = false;
@@ -78,125 +76,59 @@ int main(int argc, char* argv[]) {
 	do{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
-		//gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
-		
-		switch (settings::getInstance()->velocidades) {
-		case vel1:
-			vel = 0.5;
-			break;
-		case vel2:
-			vel = 1;
-			break;
-		case vel3:
-			vel = 2;
-			break;
+		if (start) {
 
-		default: 		break;
+			switch (settings::getInstance()->velocidades) {
+			case vel1:
+				vel = 0.5;
+				break;
+			case vel2:
+				vel = 1;
+				break;
+			case vel3:
+				vel = 2;
+				break;
 
+			default: 		break;
+
+			}
+
+
+			if (menuDeSettings::initMs()->getMenuActivo()) {
+				Timer::pause();
+				SDL_SetRelativeMouseMode(SDL_FALSE);
+				renderMenu::dibujarsettings(menuDeSettings::initMs());
+			}
+			else {
+				SDL_SetRelativeMouseMode(SDL_TRUE);
+				Timer::resume();
+			}
+			esc.actualizar_escena();
+			renderMenu::dibujarGH();
+			if (settings::getInstance()->luz1) {
+				manejadorL::luz1M().activarLuz(GL_LIGHT0);
+			}
+			else {
+				manejadorL::luz1M().desactivarLuz(GL_LIGHT0);
+			}
+			if (settings::getInstance()->luz2) {
+				manejadorL::luz2M().activarLuz(GL_LIGHT1);
+			}
+			else {
+				manejadorL::luz2M().desactivarLuz(GL_LIGHT1);
+			}
+			if (settings::getInstance()->luz3) {
+				manejadorL::luz3M().activarLuz(GL_LIGHT2);
+			}
+			else {
+				manejadorL::luz3M().desactivarLuz(GL_LIGHT2);
+			}
+		}else {
+
+			renderMenu::dibujarInicio();
 		}
-		//PRENDO LA LUZ (SIEMPRE DESPUES DEL gluLookAt)
-		//glEnable(GL_LIGHT0); // habilita la luz 0
-		//glLightfv(GL_LIGHT0, GL_POSITION, luz_posicion);
-		//glLightfv(GL_LIGHT0, GL_DIFFUSE, colorLuz);
-		//
-		//glEnable(GL_LIGHT1); // habilita la luz 1
-		//glLightfv(GL_LIGHT1, GL_POSITION, luz_posicion1);
-		//glLightfv(GL_LIGHT1, GL_DIFFUSE, colorLuz);
 
-
-		if (menuDeSettings::initMs()->getMenuActivo()) {
-			Timer::pause();
-			SDL_SetRelativeMouseMode(SDL_FALSE);
-			renderMenu::dibujarsettings(menuDeSettings::initMs());
-		}
-		else {
-			SDL_SetRelativeMouseMode(SDL_TRUE);
-			Timer::resume();
-		}
-		esc.actualizar_escena();
-		renderMenu::dibujarGH();
-		if (settings::getInstance()->luz1) {
-			manejadorL::luz1M().activarLuz(GL_LIGHT0);
-		}
-		else {
-			manejadorL::luz1M().desactivarLuz(GL_LIGHT0);
-		}
-		if (settings::getInstance()->luz2) {
-			manejadorL::luz2M().activarLuz(GL_LIGHT1);
-		}
-		else {
-			manejadorL::luz2M().desactivarLuz(GL_LIGHT1);
-		}
-		if (settings::getInstance()->luz3) {
-			manejadorL::luz3M().activarLuz(GL_LIGHT2);
-		}
-		else {
-			manejadorL::luz3M().desactivarLuz(GL_LIGHT2);
-		}
-		//if (rotate) {
-		//	degrees = degrees + 0.5f;
-		//}
-		//glRotatef(degrees, 0.0, 1.0, 0.0);
-
-		/*
-		//DIBUJAR OBJETOS
-		//DIBUJO TRIANGULO CON COLOR
-		/*glBegin(GL_TRIANGLES);
-			glColor3f(1.0, 0.0, 0.0);
-			glVertex3f(1., -1., 0.);
-			glVertex3f(-1., -1., 0.);
-			glVertex3f(0., 1., 0.);
-		glEnd();
-		glPopMatrix();*/
-
-		//boton.dibujar();
-		//DIBUJO TRIANGULO CON TEXTURA
-		/*if (textOn) {
-			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, manejadorT::texturaS().getId());
-		}
-		glBegin(GL_TRIANGLES);
-			glColor3f(1.0, 1.0, 1.0);
-			glTexCoord2f(0, 0);
-			glVertex3f(3., -1., 0.);
-			glTexCoord2f(0, 1);
-			glVertex3f(1., -1., 0.);
-			glTexCoord2f(1, 0);
-			glVertex3f(2., 1., 0.);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		Boton boton(0, 0, 1, 1,0.1, 0.1 ,0.1);	
-		boton.dibujar();
-		//DIBUJO TRIANGULO CON LUZ
-		glEnable(GL_LIGHTING);
-		glBegin(GL_TRIANGLES);
-			glNormal3f(0, 0, 1);
-			glVertex3f(-1., -1., 0.);
-			glVertex3f(-3., -1., 0.);
-			glVertex3f(-2., 1., 0.);
-		glEnd();
-		glDisable(GL_LIGHTING);*/
-		//glLineWidth(2.0f);
-		//glBegin(GL_LINES);
-
-		//// Eje X - rojo
-		//glColor3f(1.0f, 0.0f, 0.0f);
-		//glVertex3f(-10.0f, 0.0f, 0.0f);
-		//glVertex3f(10.0f, 0.0f, 0.0f);
-
-		//glColor3f(0.0f, 1.0f, 0.0f);
-		//glVertex3f(0.0f, -10.0f, 0.0f);
-		//glVertex3f(0.0f, 10.0f, 0.0f);
-		//// Eje Z - azul
-		//glColor3f(0.0f, 0.0f, 1.0f);
-		//glVertex3f(0.0f, 0.0f, -10.0f);
-		//glVertex3f(0.0f, 0.0f, 10.0f);
-
-		//glEnd();
-		//FIN DIBUJAR OBJETOS
-
-
-		controlador_evento(evento,fin, textOn, luzON, esc);
+		controlador_evento(evento,fin, textOn, luzON, esc, start);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
 	} while (!fin);
@@ -207,119 +139,104 @@ int main(int argc, char* argv[]) {
 	SDL_Quit();
 	return 0;
 }
-void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON, escena &esc) {
+void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON, escena &esc, bool &start) {
 	std::array<boton1*, 9> botones = menuDeSettings::initMs()->getBotones();
-	while (SDL_PollEvent(&evento)) {
-		switch (evento.type) {
-		case SDL_MOUSEMOTION:
-			//const float x_offset = static_cast<float>(evento.motion.xrel);
-			//const float y_offset = -static_cast<float>(evento.motion.yrel);
-			esc.rotar_camara( static_cast<float>(evento.motion.xrel), -static_cast<float>(evento.motion.yrel));
-			break;
+	if (start) {
+		while (SDL_PollEvent(&evento)) {
+			switch (evento.type) {
+			case SDL_MOUSEMOTION:
+				esc.rotar_camara(static_cast<float>(evento.motion.xrel), -static_cast<float>(evento.motion.yrel));
+				break;
 
-		case SDL_MOUSEBUTTONDOWN:
+			case SDL_MOUSEBUTTONDOWN:
+				if (menuDeSettings::initMs()->getMenuActivo()) {
 
-			if (false) {
-				cout << "Clickeado" << evento.button.x-640 << "\n";
-				cout << "Clickeado" << -evento.button.y + 360<< "\n";
-			}
-			if (menuDeSettings::initMs()->getMenuActivo() ) {
-					//boton.manejarEvento(evento);
-					//boton.onClick();
-				
-				 if (botones[0]->is_inside(evento.button.x, evento.button.y)) {
-					botones[0]->on_clickvel1();
-					botones[0]->cambiarClick();
-					botones[1]->set_click(false);
-					botones[2]->set_click(false);
-					cout << "clickeado" << evento.button.x << "\n";
+					if (botones[0]->is_inside(evento.button.x, evento.button.y)) {
+						botones[0]->on_clickvel1();
+						botones[0]->cambiarClick();
+						botones[1]->set_click(false);
+						botones[2]->set_click(false);
+					}
+					else if (botones[1]->is_inside(evento.button.x, evento.button.y)) {
+						botones[1]->on_clickvel2();
+						botones[1]->cambiarClick();
+						botones[0]->set_click(false);
+						botones[2]->set_click(false);
+					}
+					else if (botones[2]->is_inside(evento.button.x, evento.button.y)) {
+						botones[2]->on_clickvel3();
+						botones[2]->cambiarClick();
+						botones[1]->set_click(false);
+						botones[0]->set_click(false);
+					}
+					else if (botones[3]->is_inside(evento.button.x, evento.button.y)) {
+						botones[3]->on_clickluz1();
+						botones[3]->cambiarClick();
+					}
+					else if (botones[4]->is_inside(evento.button.x, evento.button.y)) {
+						botones[4]->on_clickluz2();
+						botones[4]->cambiarClick();
+					}
+					else if (botones[5]->is_inside(evento.button.x, evento.button.y)) {
+						botones[5]->on_clickluz3();
+						botones[5]->cambiarClick();
+					}
+					else if (botones[6]->is_inside(evento.button.x, evento.button.y)) {
+						botones[6]->on_clickTexOn();
+						botones[6]->cambiarClick();
+					}
+					else if (botones[7]->is_inside(evento.button.x, evento.button.y)) {
+						botones[7]->on_clickwire();
+						botones[7]->cambiarClick();
+					}
+					else if (botones[8]->is_inside(evento.button.x, evento.button.y)) {
+						botones[8]->on_clickfaceteado();
+						botones[8]->cambiarClick();
+					}
 				}
-				else if (botones[1]->is_inside(evento.button.x, evento.button.y)) {
-					botones[1]->on_clickvel2();
-					botones[1]->cambiarClick();
-					botones[0]->set_click(false);
-					botones[2]->set_click(false);
-				}
-				else if (botones[2]->is_inside(evento.button.x, evento.button.y)) {
-					botones[2]->on_clickvel3();
-					botones[2]->cambiarClick();
-					botones[1]->set_click(false);
-					botones[0]->set_click(false);
-				}
-				else if (botones[3]->is_inside(evento.button.x, evento.button.y)) {
-					botones[3]->on_clickluz1();
-					botones[3]->cambiarClick();
-				}
-				else if (botones[4]->is_inside(evento.button.x, evento.button.y)) {
-					botones[4]->on_clickluz2();
-					botones[4]->cambiarClick();
-				}
-				else if (botones[5]->is_inside(evento.button.x, evento.button.y)) {
-					botones[5]->on_clickluz3();
-					botones[5]->cambiarClick();
-				}
-				else if (botones[6]->is_inside(evento.button.x, evento.button.y)) {
-					botones[6]->on_clickTexOn();
-					botones[6]->cambiarClick();
-				}
-				else if (botones[7]->is_inside(evento.button.x, evento.button.y)) {
-					botones[7]->on_clickwire();
-					botones[7]->cambiarClick();
-				}
-				else if (botones[8]->is_inside(evento.button.x, evento.button.y)) {
-					botones[8]->on_clickfaceteado();
-					botones[8]->cambiarClick();
-				}
-			}
-			break;
-		case SDL_MOUSEBUTTONUP:
-			
-			break;
-		
-		case SDL_QUIT:
-			fin = true;
-			break;
-		case SDL_KEYUP:
-			esc.mover_jugador(evento);
-			switch (evento.key.keysym.sym) {
-			case SDLK_q:
+				break;
+			case SDL_MOUSEBUTTONUP:
+
+				break;
+
+			case SDL_QUIT:
 				fin = true;
 				break;
-			case SDLK_ESCAPE:
-				fin = true;
-				break;
-			case SDLK_l:
-				textOn = !textOn;
-				break;
-			case SDLK_RIGHT:
-				break;
-			case SDLK_p:
-				menuDeSettings::initMs()->setMenuActivo(!menuDeSettings::initMs()->getMenuActivo());
-				cout << "abrir menu";
-				break;
-			case SDLK_g:
-				luzON = !luzON;
-				cout << "G luz";
-				break;
-			case SDLK_w:
-				cout << "Arriba"<<endl;
-				Timer::start();
-				break;
-			case SDLK_a:
-				cout << "Izquierda"<< endl;
-				cout << "tiempo: " << Timer::getSeconds() << endl;
-				break;
-			case SDLK_s:
-				cout << "S Abajo";
-				break;
-			case SDLK_d:
-				cout << "D Derecha";
-				break;
-			case SDLK_v:
-				esc.cambiar_camara();
-				cout << "CAMBIE";
-				break;
-			}
+			case SDL_KEYUP:
+				esc.mover_jugador(evento);
+				switch (evento.key.keysym.sym) {
+				case SDLK_q:
+					fin = true;
+					break;
+				case SDLK_ESCAPE:
+					fin = true;
+					break;
+				case SDLK_p:
+					menuDeSettings::initMs()->setMenuActivo(!menuDeSettings::initMs()->getMenuActivo());
+					cout << "abrir menu";
+					break;
+
+				case SDLK_v:
+					esc.cambiar_camara();
+					cout << "CAMBIE";
+					break;
+				case SDLK_s:
+
+					break;
+				}
 			}
 		}
+	}
+	else if (SDL_PollEvent(&evento)) {
+		
+		switch (evento.type) {
+		case SDL_MOUSEBUTTONDOWN:
+			start = true;
+			Timer::start();
+			break;
+		default:
+			break;
+		}
+	}
+
 	}
