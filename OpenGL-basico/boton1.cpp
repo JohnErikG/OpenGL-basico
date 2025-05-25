@@ -65,7 +65,7 @@ void boton1::on_clickvel2() const
 
 void boton1::on_clickvel3() const
 {
-	settings->velocidades = vel2;
+	settings->velocidades = vel3;
 }
 
 void boton1::on_clickTexOn() const
