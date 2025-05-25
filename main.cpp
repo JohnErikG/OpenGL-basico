@@ -36,8 +36,8 @@ int main(int argc, char* argv[]) {
 	SDL_GLContext context = SDL_GL_CreateContext(win);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_ShowCursor(SDL_ENABLE);
-	SDL_GL_SetSwapInterval(0);
-
+	//SDL_GL_SetSwapInterval(0);
+	SDL_GL_SetSwapInterval(1);
 
 	glMatrixMode(GL_PROJECTION);
 
@@ -140,6 +140,7 @@ int main(int argc, char* argv[]) {
 		controlador_evento(evento,fin, textOn, luzON, esc, start, reset);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
+		
 		frameEnd = SDL_GetPerformanceCounter();
 		elapsedSeconds = (frameEnd - frameStart) / static_cast<double>(performanceFrequency);
 		frameCount++;
@@ -247,8 +248,9 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 				case SDLK_r:
 					Timer::reset();
 					Timer::start();
+					esc.~escena();
 					esc = escena();
-					reset = !reset;
+					//reset = !reset;
 					break;
 				case SDLK_v:
 					esc.cambiar_camara();
