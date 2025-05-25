@@ -27,9 +27,9 @@ void gamehub::DibujarTiempo(const Uint32 segundos )
 
     glEnable(GL_TEXTURE_2D);
 	Uint32 unidades = segundos % 10 ; // Unidades de tiempo en milisegundos
-	Uint32 decimas = segundos / 10; // Decimas de tiempo en milisegundos
+	Uint32 decimas = (segundos / 10)%10; // Decimas de tiempo en milisegundos
 	Uint32 minutos = unidades / 60; // Minutos
-	Uint32 centenas = minutos % 10; 
+	Uint32 centenas = segundos/100; 
 	Uint32 miles = centenas / 10; // Centenas de tiempo en milisegundos
     
    // glDisable(GL_DEPTH_TEST);

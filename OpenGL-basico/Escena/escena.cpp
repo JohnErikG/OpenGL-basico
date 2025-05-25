@@ -79,6 +79,8 @@ escena::escena()
     printf("Se cargaron %d vertices", manzana.vertices.size());
     modelo pinchos = ManejadorModelos::load_model("../Modelos/spike.obj");
     printf("Se cargaron %d vertices", pinchos.vertices.size());
+    modelo portal = ManejadorModelos::load_model("../Modelos/Portal_01.fbx");
+    addEntidad(entidad(portal.vertices, portal.indices, vector3(14, 3.5, 0), vector3(0.47, 0.47, 0.47), manejadorT::texturapor().getId(), entidad::piso));
     addEntidad(entidad(manzana.vertices, manzana.indices, vector3(7, 1, 0), vector3(0.01f, 0.01f, 0.01f), manejadorT::texturaM().getId(), entidad::manzana));
     addEntidad(entidad(manzana.vertices, manzana.indices, vector3(12, 0, 0), vector3(0.01f, 0.01f, 0.01f), manejadorT::texturaM().getId(), entidad::manzana));
     addEntidad(entidad(manzana.vertices, manzana.indices, vector3(8, 3, 0), vector3(0.01f, 0.01f, 0.01f), manejadorT::texturaM().getId(), entidad::manzana));

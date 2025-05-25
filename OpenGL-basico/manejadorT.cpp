@@ -82,6 +82,11 @@ Texturas manejadorT::Settings()
 	return instance->TextSettings;
 }
 
+Texturas manejadorT::texturapor()
+{
+	return instance->texturaportal;
+}
+
 Texturas manejadorT::texturaM()
 {
 	return instance->texturaManzana;

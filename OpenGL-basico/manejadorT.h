@@ -6,11 +6,11 @@ class manejadorT
 {
 	static manejadorT* instance;
 	Texturas botonT, botonF;
-	Texturas imagenMuestra, texturaSuelo,texturaManzana, texturaPlayer;
+	Texturas imagenMuestra, texturaSuelo,texturaManzana, texturaPlayer, texturaportal;
 	Texturas texturaFondo, TextSettings;
 	const Texturas unoT, dosT, tresT, cuatroT, cincoT, seisT, sieteT, ochoT, nueveT, ceroT;
 	explicit  manejadorT() : imagenMuestra(cargadorT::cargarTextura("../canon.png")), 
-							 texturaSuelo(cargadorT::cargarTextura("../Texturas/tierra.jpg"))
+							 texturaSuelo(cargadorT::cargarTextura("../Texturas/tierra.jpg")), texturaportal(cargadorT::cargarTexturaM("../Texturas/portal.png"))
 		, unoT(cargadorT::cargarTextura("../Texturas/uno.png")), dosT(cargadorT::cargarTextura("../Texturas/dos.png")), tresT(cargadorT::cargarTextura("../Texturas/tres.png")), 
 		cuatroT(cargadorT::cargarTextura("../Texturas/cuatro.png")), cincoT(cargadorT::cargarTextura("../Texturas/cinco.png")),
 		seisT(cargadorT::cargarTextura("../Texturas/seis.png")), sieteT(cargadorT::cargarTextura("../Texturas/siete.png")), ochoT(cargadorT::cargarTextura("../Texturas/ocho.png")),
@@ -41,7 +41,7 @@ public:
 	const static Texturas nueve();
 	const static Texturas cero();
 	
-
+	static Texturas texturapor();
 	static Texturas texturaM();
 	static Texturas texturaP();
 };
