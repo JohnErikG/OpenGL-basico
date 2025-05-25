@@ -23,5 +23,5 @@ public:
     void actualizar_angulos_desde_direccion();
 
     void mover(const vector3& desplazamiento);
-    void rotar(float x_offset, float y_offset, bool primera_persona);
+    void rotar(float x_offset, float y_offset, bool primera_persona, bool vertical, bool atras);
 };

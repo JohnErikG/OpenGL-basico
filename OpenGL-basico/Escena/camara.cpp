@@ -63,7 +63,7 @@ void camara::mover(const vector3& desplazamiento)
 
 
 
-void camara::rotar(const float x_offset, const float y_offset, const bool primera_persona)
+void camara::rotar(const float x_offset, const float y_offset, const bool primera_persona , const bool vertical, const bool atras)
 {
     constexpr float sensitivity = 0.1f;
 
@@ -81,11 +81,17 @@ void camara::rotar(const float x_offset, const float y_offset, const bool primer
     if (pitch_ < -89.0f)
         pitch_ = -89.0f;
 
-    if (primera_persona) {
-        if (yaw_ > 89.0f)
-            yaw_ = 89.0f;
-        if (yaw_ < -89.0f)
-            yaw_ = -89.0f;
+    if (primera_persona && !vertical) {
+        if (!atras) {
+            if (yaw_ > 89.0f)
+                yaw_ = 89.0f;
+            if (yaw_ < -89.0f)
+                yaw_ = -89.0f;
+        }
+        else {
+            if (yaw_ < 90.0f) yaw_ = 90.0f;
+            if (yaw_ > 270.0f) yaw_ = 270.0f;
+        }
     }
 
     if (!primera_persona) {

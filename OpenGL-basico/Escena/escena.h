@@ -27,7 +27,7 @@ class escena final
     player* jugador_;
     std::vector<entidad> entidades_;
 
-    
+
 
 public:
     escena();
@@ -39,8 +39,9 @@ public:
     modo_camara get_modo_camara() const;
     camara* get_camara() const;
     void dibujar_jugador(bool primera_persona);
-    void escena::drawCube(GLuint textura, vector3 posicion);
+    void drawCube(GLuint textura, vector3 posicion, vector3 escala);
     void addEntidad(const entidad& entidad);
+    void setVelocidad(const float velocidad);
 private:
     std::vector<entidad> manzanas_;
     std::vector<vector3> pinchos_;
