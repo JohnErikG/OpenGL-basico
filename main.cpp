@@ -23,7 +23,6 @@ using namespace std;
 
 void controlador_evento(SDL_Event &evento, bool &fin,bool & textOn, bool &luzON, escena &esc, bool  &start , bool &active, float &vel, bool &won);
 
-
 int main(int argc, char* argv[]) {
 	//INICIALIZACION
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -38,8 +37,8 @@ int main(int argc, char* argv[]) {
 	SDL_GLContext context = SDL_GL_CreateContext(win);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_ShowCursor(SDL_ENABLE);
-	SDL_GL_SetSwapInterval(0);
-
+	//SDL_GL_SetSwapInterval(0);
+	SDL_GL_SetSwapInterval(1);
 
 	glMatrixMode(GL_PROJECTION);
 
@@ -64,7 +63,7 @@ int main(int argc, char* argv[]) {
 	SDL_Event evento;
 	bool start = false;
 	float degrees = 0;
-	
+	bool reset= false ;
 	Uint64 performanceFrequency = SDL_GetPerformanceFrequency();
 	Uint64 frameStart, frameEnd;
 	double elapsedSeconds;
@@ -133,6 +132,7 @@ int main(int argc, char* argv[]) {
 		controlador_evento(evento,fin, textOn, luzON, esc, start, active, vel,won);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
+		
 		frameEnd = SDL_GetPerformanceCounter();
 		elapsedSeconds = (frameEnd - frameStart) / static_cast<double>(performanceFrequency);
 		frameCount++;
@@ -255,6 +255,9 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 					Timer::reset();
 					active = true;
 					won = false;
+					Timer::start();
+					esc.~escena();
+					esc = escena();
 					break;
 				case SDLK_v:
 					if (active && !(menuDeSettings::initMs()->getMenuActivo())) {
@@ -262,7 +265,8 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 					}
 					break;
 				case SDLK_s:
-
+					break;
+				default:
 					break;
 				}
 			}
