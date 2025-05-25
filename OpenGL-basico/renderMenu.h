@@ -16,4 +16,5 @@ public:
     static void dibujarInicio();  
     static void dibujarsettings(menuDeSettings* Mset);  
     static void dibujarBoton(const boton1* bot);  
+    static void dibujarWin();
 };

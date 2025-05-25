@@ -115,6 +115,34 @@ void renderMenu::dibujarBoton(const boton1* bot) {
 	}
 
 }
+void renderMenu::dibujarWin()
+{
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glLoadIdentity();
+	glOrtho(-1280, 1280, -720, 720, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, manejadorT::texW().getId());
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(-600, -300, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(600, -300, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(600, 300, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(-600, 300, 0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+}
 void renderMenu::dibujarsettings(menuDeSettings* Mset)
 {
 	glMatrixMode(GL_PROJECTION);

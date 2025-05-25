@@ -6,7 +6,7 @@ class manejadorT
 {
 	static manejadorT* instance;
 	Texturas botonT, botonF;
-	Texturas imagenMuestra, texturaSuelo,texturaManzana, texturaPlayer, texturaportal;
+	Texturas imagenMuestra, texturaSuelo,texturaManzana, texturaPlayer, texturaportal, texWin;
 	Texturas texturaFondo, TextSettings;
 	const Texturas unoT, dosT, tresT, cuatroT, cincoT, seisT, sieteT, ochoT, nueveT, ceroT;
 	explicit  manejadorT() : imagenMuestra(cargadorT::cargarTextura("../canon.png")), 
@@ -17,7 +17,7 @@ class manejadorT
 		nueveT(cargadorT::cargarTextura("../Texturas/nueve.png")), ceroT(cargadorT::cargarTextura("../Texturas/cero.png")),
 		botonT(cargadorT::cargarTextura("../Texturas/botonTick.jpg")), botonF(cargadorT::cargarTextura("../Texturas/botonX.jpg")),
 		texturaFondo(cargadorT::cargarTextura("../Texturas/fondo.png")), TextSettings(cargadorT::cargarTextura("../Texturas/Settings.png")), 
-		texturaManzana(cargadorT::cargarTexturaM("../Texturas/Apple_BaseColor.png")),
+		texturaManzana(cargadorT::cargarTexturaM("../Texturas/Apple_BaseColor.png")), texWin(cargadorT::cargarTextura("../Texturas/VICTORY.png")),
 		texturaPlayer(cargadorT::cargarTexturaM("../Texturas/player.jpg"))					 
 	{
 	}
@@ -41,6 +41,7 @@ public:
 	const static Texturas nueve();
 	const static Texturas cero();
 	
+	static Texturas texW();
 	static Texturas texturapor();
 	static Texturas texturaM();
 	static Texturas texturaP();
