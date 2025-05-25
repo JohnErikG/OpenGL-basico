@@ -76,8 +76,8 @@ escena::escena()
     vector3 pos(7.5f, 3.5f, 20);
     vector3 dir(0.0f, 0.0f, -1.0f);
     vector3 up(0.0f, 1.0f, 0.0f);
-    jugador_ = new player;
-    camara_ = new camara(&pos, &dir, &up);
+    jugador_ = std::make_unique<player>();
+    camara_ = std::make_unique<camara>(&pos, &dir, &up);
     modelo manzana = ManejadorModelos::load_model("../Modelos/Apple.obj");
     printf("Se cargaron %d vertices", manzana.vertices.size());
     modelo pinchos = ManejadorModelos::load_model("../Modelos/spike.obj");
@@ -121,12 +121,6 @@ escena::escena()
     addEntidad(entidad(cubo.vertices, cubo.indices, vector3(12, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId(), entidad::piso));
     addEntidad(entidad(cubo.vertices, cubo.indices, vector3(13, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId(), entidad::piso));
     addEntidad(entidad(cubo.vertices, cubo.indices, vector3(14, 3, 0), vector3(1, 1, 1), manejadorT::texturaS().getId(), entidad::piso));
-}
-
-escena::~escena()
-{
-    delete camara_;
-    camara_ = nullptr;
 }
 
 void escena::calcular_manzanas() {
@@ -182,11 +176,7 @@ void escena::actualizar_escena()
         case normal:
             break;
         }
-        int i = 0;
         for (const vector3& segmento : jugador_->get_cuerpo()) {
-            printf("Segmento: %d \n", i);
-            printf("Colision: %d \n",calcular_colisiones(vector3(0, 0, 0), segmento,false));
-            i++;
             if (calcular_colisiones(vector3(0, 0, 0), segmento,false) == 3) {
                 throw GameOverException();
             }
@@ -477,11 +467,6 @@ void escena::setVelocidad(const float velocidad) {
 modo_camara escena::get_modo_camara() const
 {
     return modo_camara_;
-}
-
-camara* escena::get_camara() const
-{
-    return camara_;
 }
 
 void escena::addEntidad(const entidad& e) {

@@ -101,6 +101,7 @@ int main(int argc, char* argv[]) {
 					}
 					catch (const GameOverException &e) {
 						active = false;
+						Timer::pause();
 					}
 			}
 			renderMenu::dibujarGH();
@@ -235,6 +236,7 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 						active = false;
 					}
 					catch (const GameOverException &e) {
+						Timer::pause();
 						active = false;
 					}
 					
@@ -256,7 +258,6 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 					active = true;
 					won = false;
 					Timer::start();
-					esc.~escena();
 					esc = escena();
 					break;
 				case SDLK_v:

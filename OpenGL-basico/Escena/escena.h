@@ -23,21 +23,19 @@ struct coordinate
 class escena final
 {
     modo_camara modo_camara_ = normal;
-    camara* camara_;
-    player* jugador_;
+    std::unique_ptr<player> jugador_;
+    std::unique_ptr<camara> camara_;
     std::vector<entidad> entidades_;
 
 
 
 public:
     escena();
-    ~escena();
     void cambiar_camara();
     void rotar_camara(float x, float y) const;
     void actualizar_escena();
     void mover_jugador(const SDL_Event& evento);
     modo_camara get_modo_camara() const;
-    camara* get_camara() const;
     void dibujar_jugador(bool primera_persona);
     void drawCube(GLuint textura, vector3 posicion, vector3 escala);
     void addEntidad(const entidad& entidad);
