@@ -18,7 +18,7 @@
 #include "OpenGL-basico/renderMenu.h"
 using namespace std;
 
-void controlador_evento(SDL_Event &evento, bool &fin,bool & textOn, bool &luzON, escena &esc, bool  &start );
+void controlador_evento(SDL_Event &evento, bool &fin,bool & textOn, bool &luzON, escena &esc, bool  &start , bool &reset);
 
 
 
@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
 	y = 0;
 	z = 5;
 	float degrees = 0;
-	
+	bool reset= false ;
 	Uint64 performanceFrequency = SDL_GetPerformanceFrequency();
 	Uint64 frameStart, frameEnd;
 	double elapsedSeconds;
@@ -97,7 +97,11 @@ int main(int argc, char* argv[]) {
 			default: 		break;
 
 			}
-
+			if (reset) {
+				esc.~escena();
+				escena esc;
+				reset = false;
+			}
 
 			if (menuDeSettings::initMs()->getMenuActivo()) {
 				Timer::pause();
@@ -133,7 +137,7 @@ int main(int argc, char* argv[]) {
 			renderMenu::dibujarInicio();
 		}
 		
-		controlador_evento(evento,fin, textOn, luzON, esc, start);
+		controlador_evento(evento,fin, textOn, luzON, esc, start, reset);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
 		frameEnd = SDL_GetPerformanceCounter();
@@ -159,7 +163,7 @@ int main(int argc, char* argv[]) {
 	SDL_Quit();
 	return 0;
 }
-void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON, escena &esc, bool &start) {
+void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON, escena &esc, bool &start, bool &reset) {
 	std::array<boton1*, 9> botones = menuDeSettings::initMs()->getBotones();
 	if (start) {
 		while (SDL_PollEvent(&evento)) {
@@ -237,6 +241,9 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 					break;
 				case SDLK_r:
 					Timer::reset();
+					Timer::start();
+					esc = escena();
+					reset = !reset;
 					break;
 				case SDLK_v:
 					esc.cambiar_camara();
@@ -244,6 +251,8 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 					break;
 				case SDLK_s:
 
+					break;
+				default:
 					break;
 				}
 			}
