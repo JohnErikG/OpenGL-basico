@@ -111,8 +111,8 @@ int main(int argc, char* argv[]) {
 			else {
 				SDL_SetRelativeMouseMode(SDL_TRUE);
 				Timer::resume();
+				esc.actualizar_escena();
 			}
-			esc.actualizar_escena();
 			renderMenu::dibujarGH();
 			if (settings::getInstance()->luz1) {
 				manejadorL::luz1M().activarLuz(GL_LIGHT0);
@@ -177,18 +177,21 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 
 					if (botones[0]->is_inside(evento.button.x, evento.button.y)) {
 						botones[0]->on_clickvel1();
+						esc.setVelocidad(0.5f);
 						botones[0]->set_click(true);
 						botones[1]->set_click(false);
 						botones[2]->set_click(false);
 					}
 					else if (botones[1]->is_inside(evento.button.x, evento.button.y)) {
 						botones[1]->on_clickvel2();
+						esc.setVelocidad(0.5f);
 						botones[1]->set_click(true);
 						botones[0]->set_click(false);
 						botones[2]->set_click(false);
 					}
 					else if (botones[2]->is_inside(evento.button.x, evento.button.y)) {
 						botones[2]->on_clickvel3();
+						esc.setVelocidad(1.0f);
 						botones[2]->set_click(true);
 						botones[1]->set_click(false);
 						botones[0]->set_click(false);
@@ -227,7 +230,9 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 				fin = true;
 				break;
 			case SDL_KEYUP:
-				esc.mover_jugador(evento);
+				if (!(menuDeSettings::initMs()->getMenuActivo())) {
+					esc.mover_jugador(evento);
+				}
 				switch (evento.key.keysym.sym) {
 				case SDLK_q:
 					fin = true;

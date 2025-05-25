@@ -12,10 +12,10 @@
 
 
 
-void escena::drawCube(GLuint textura,vector3 posicion) {
-   
+void escena::drawCube(GLuint textura, vector3 posicion, vector3 escala) {
+
     modelo cubo = ManejadorModelos::load_cube();
-    entidad ecubo = entidad(cubo.vertices, cubo.indices, posicion, vector3(1, 1, 1), textura,entidad::jugador);
+    entidad ecubo = entidad(cubo.vertices, cubo.indices, posicion, escala, textura, entidad::jugador);
     ecubo.dibujar();
 }
 
@@ -37,6 +37,7 @@ void escena::cambiar_camara()
             vector3 posicion_camara = objetivo + vector3(0, 5, 10);
             camara_->set_posicion(posicion_camara);
             camara_->set_direccion((objetivo - posicion_camara).normalize());
+            camara_->set_up(vector3(0, 1, 0));
             camara_->actualizar_angulos_desde_direccion();
             break;
         }
@@ -56,12 +57,12 @@ void escena::rotar_camara(const float x, const float y) const
     switch (modo_camara_)
     {
     case primera_persona:
-        camara_->rotar(x, y, true);
+        camara_->rotar(x, y, true,jugador_->get_direccion().get_y()!=0, jugador_->get_direccion().get_x() < 0);
         break;
     case normal:
         break;
     case perspectiva:
-        camara_->rotar(x, y, false);
+        camara_->rotar(x, y, false,false,false);
         break;
     }
 }
@@ -196,39 +197,43 @@ void escena::dibujar_jugador(bool primera_persona) {
     if (!primera_persona) {
         //Solo renderizo cabeza si no estoy en primera persona
         vector3 cabeza = jugador_->get_cuerpo()[0];
-        drawCube(manejadorT::texturaP().getId(),vector3(cabeza.get_x(), cabeza.get_y(), cabeza.get_z()));
+        drawCube(manejadorT::texturaP().getId(), vector3(cabeza.get_x(), cabeza.get_y(), cabeza.get_z()), vector3(1, 1.15f, 1.15f));
     }
 
-    for (int i = 1; i < jugador_->get_segmentos();i++) {
+    for (int i = 1; i < jugador_->get_segmentos(); i++) {
         vector3 segmento = jugador_->get_cuerpo()[i];
-        drawCube(manejadorT::texturaP().getId(),vector3(segmento.get_x(), segmento.get_y(), segmento.get_z()));
-    
+        drawCube(manejadorT::texturaP().getId(), vector3(segmento.get_x(), segmento.get_y(), segmento.get_z()), vector3(1, 1, 1));
+
     }
 
 }
 
 unsigned int escena::calcular_colisiones(const vector3& direccion, const vector3& segmento) {
-    
+
     vector3 nueva_posicion = segmento + direccion * jugador_->get_velocidad();
-    
-    for (int i = 1; i < jugador_->get_segmentos(); i++) {
-        if (jugador_->get_cuerpo()[i].get_x() == nueva_posicion.get_x() && jugador_->get_cuerpo()[i].get_y() == nueva_posicion.get_y()) {
-            return 1;
-        }
-    }
-    
+    const float margen = 0.5f + 0.1f;
+
     for (const vector3& bloque : bloques_) {
-        if (bloque.get_x() == nueva_posicion.get_x() && bloque.get_y() == nueva_posicion.get_y()) {
+        if (std::abs(bloque.get_x() - nueva_posicion.get_x()) < margen &&
+            std::abs(bloque.get_y() - nueva_posicion.get_y()) < margen) {
             return 2;
         }
     }
 
+    for (int i = 1; i < jugador_->get_segmentos(); i++) {
+        const vector3& segmento_cuerpo = jugador_->get_cuerpo()[i];
+        if (std::abs(segmento_cuerpo.get_x() - nueva_posicion.get_x()) < margen &&
+            std::abs(segmento_cuerpo.get_y() - nueva_posicion.get_y()) < margen) {
+            return 1;
+        }
+    }
+
     for (const vector3& pincho : pinchos_) {
-        if (pincho.get_x() == nueva_posicion.get_x() && pincho.get_y() + 0.5f == nueva_posicion.get_y()) {
+        if (std::abs(pincho.get_x() - nueva_posicion.get_x()) < margen &&
+            std::abs(pincho.get_y() - nueva_posicion.get_y()) < margen) {
             return 3;
         }
     }
-    
     return 0;
 
 }
@@ -236,7 +241,7 @@ unsigned int escena::calcular_colisiones(const vector3& direccion, const vector3
 
 void escena::mover_jugador(const SDL_Event& evento)
 {
-    const float velocidad = 1.0f;
+    const float velocidad = jugador_->get_velocidad();;
     vector3 movimiento;
     bool choca = false;
     switch (modo_camara_)
@@ -245,10 +250,20 @@ void escena::mover_jugador(const SDL_Event& evento)
     {
         vector3 direccion = camara_->get_direccion();
         if (std::abs(direccion.get_x()) >= std::abs(direccion.get_z()) && std::abs(direccion.get_x()) >= std::abs(direccion.get_y())) {
-            direccion = vector3(direccion.get_x(), 0, 0);
+            if (direccion.get_x() > 0) {
+                direccion = vector3(1, 0, 0);
+            }
+            else {
+                direccion = vector3(-1, 0, 0);
+            }
         }
         else if ((std::abs(direccion.get_y()) >= std::abs(direccion.get_z()) && std::abs(direccion.get_y()) > std::abs(direccion.get_x()))) {
-            direccion = vector3(0, direccion.get_y(), 0);
+            if (direccion.get_y() > 0) {
+                direccion = vector3(0, 1, 0);
+            }
+            else {
+                direccion = vector3(0, -1, 0);
+            }
         }
         else {
             direccion = vector3(0, 0, 0);
@@ -350,6 +365,7 @@ void escena::mover_jugador(const SDL_Event& evento)
             camara_->mover(jugador_->get_direccion() * velocidad);
         }
         camara_->set_direccion(jugador_->get_direccion());
+        camara_->set_up(jugador_->get_up());
         camara_->actualizar_angulos_desde_direccion();
         break;
     case perspectiva:
@@ -374,6 +390,10 @@ void escena::calcular_gravedad() {
         }
     }
     jugador_->set_contacto(false);
+}
+
+void escena::setVelocidad(const float velocidad) {
+    jugador_->set_velocidad(velocidad);
 }
 
 modo_camara escena::get_modo_camara() const
