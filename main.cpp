@@ -16,10 +16,12 @@
 #include "OpenGL-basico/gamehub.h"
 #include "OpenGL-basico/Settings.h"
 #include "OpenGL-basico/renderMenu.h"
+#include "OpenGL-basico/GameOverException.h"
+#include "OpenGL-basico/GameWonException.h"
+
 using namespace std;
 
-void controlador_evento(SDL_Event &evento, bool &fin,bool & textOn, bool &luzON, escena &esc, bool  &start );
-
+void controlador_evento(SDL_Event &evento, bool &fin,bool & textOn, bool &luzON, escena &esc, bool  &start , bool &active, float &vel, bool &won);
 
 
 int main(int argc, char* argv[]) {
@@ -60,11 +62,7 @@ int main(int argc, char* argv[]) {
 	
 	bool fin = false;
 	SDL_Event evento;
-	float x, y, z;
 	bool start = false;
-	x = 0;
-	y = 0;
-	z = 5;
 	float degrees = 0;
 	
 	Uint64 performanceFrequency = SDL_GetPerformanceFrequency();
@@ -76,28 +74,20 @@ int main(int argc, char* argv[]) {
 	bool textOn = true;
 	bool luzON = false;
 	float vel = 1;
+	bool active = true;
+	bool won = false;
 	//LOOP PRINCIPAL
 	do{
 		frameStart = SDL_GetPerformanceCounter();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
-		if (start) {
+		
+		if (won)
+		{
+			renderMenu::dibujarWin();
+		}
 
-			switch (settings::getInstance()->velocidades) {
-			case vel1:
-				vel = 0.5;
-				break;
-			case vel2:
-				vel = 1;
-				break;
-			case vel3:
-				vel = 2;
-				break;
-
-			default: 		break;
-
-			}
-
+		else if (start) {
 
 			if (menuDeSettings::initMs()->getMenuActivo()) {
 				Timer::pause();
@@ -107,7 +97,12 @@ int main(int argc, char* argv[]) {
 			else {
 				SDL_SetRelativeMouseMode(SDL_TRUE);
 				Timer::resume();
-				esc.actualizar_escena();
+					try {
+						esc.actualizar_escena();
+					}
+					catch (const GameOverException &e) {
+						active = false;
+					}
 			}
 			renderMenu::dibujarGH();
 			if (settings::getInstance()->luz1) {
@@ -128,12 +123,14 @@ int main(int argc, char* argv[]) {
 			else {
 				manejadorL::luz3M().desactivarLuz(GL_LIGHT2);
 			}
-		}else {
+		}
 
+		else
+		{
 			renderMenu::dibujarInicio();
 		}
 		
-		controlador_evento(evento,fin, textOn, luzON, esc, start);
+		controlador_evento(evento,fin, textOn, luzON, esc, start, active, vel,won);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
 		frameEnd = SDL_GetPerformanceCounter();
@@ -159,7 +156,7 @@ int main(int argc, char* argv[]) {
 	SDL_Quit();
 	return 0;
 }
-void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON, escena &esc, bool &start) {
+void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON, escena &esc, bool &start, bool &active, float &vel, bool &won) {
 	std::array<boton1*, 9> botones = menuDeSettings::initMs()->getBotones();
 	if (start) {
 		while (SDL_PollEvent(&evento)) {
@@ -174,6 +171,7 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 					if (botones[0]->is_inside(evento.button.x, evento.button.y)) {
 						botones[0]->on_clickvel1();
 						esc.setVelocidad(0.5f);
+						vel = 0.5f;
 						botones[0]->set_click(true);
 						botones[1]->set_click(false);
 						botones[2]->set_click(false);
@@ -181,6 +179,7 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 					else if (botones[1]->is_inside(evento.button.x, evento.button.y)) {
 						botones[1]->on_clickvel2();
 						esc.setVelocidad(0.5f);
+						vel = 0.5f;
 						botones[1]->set_click(true);
 						botones[0]->set_click(false);
 						botones[2]->set_click(false);
@@ -188,6 +187,7 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 					else if (botones[2]->is_inside(evento.button.x, evento.button.y)) {
 						botones[2]->on_clickvel3();
 						esc.setVelocidad(1.0f);
+						vel = 1.0f;
 						botones[2]->set_click(true);
 						botones[1]->set_click(false);
 						botones[0]->set_click(false);
@@ -226,8 +226,18 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 				fin = true;
 				break;
 			case SDL_KEYUP:
-				if (!(menuDeSettings::initMs()->getMenuActivo())) {
-					esc.mover_jugador(evento);
+				if (active && !(menuDeSettings::initMs()->getMenuActivo())) {
+					try {
+						esc.mover_jugador(evento);
+					}
+					catch (const GameWonException &e) {
+						won = true;
+						active = false;
+					}
+					catch (const GameOverException &e) {
+						active = false;
+					}
+					
 				}
 				switch (evento.key.keysym.sym) {
 				case SDLK_q:
@@ -237,15 +247,19 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 					fin = true;
 					break;
 				case SDLK_p:
-					menuDeSettings::initMs()->setMenuActivo(!menuDeSettings::initMs()->getMenuActivo());
-					cout << "abrir menu";
+					if (active) {
+						menuDeSettings::initMs()->setMenuActivo(!menuDeSettings::initMs()->getMenuActivo());
+					}
 					break;
 				case SDLK_r:
 					Timer::reset();
+					active = true;
+					won = false;
 					break;
 				case SDLK_v:
-					esc.cambiar_camara();
-					cout << "CAMBIE";
+					if (active && !(menuDeSettings::initMs()->getMenuActivo())) {
+						esc.cambiar_camara();
+					}
 					break;
 				case SDLK_s:
 

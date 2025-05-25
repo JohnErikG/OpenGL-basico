@@ -152,6 +152,12 @@
     <ClInclude Include="Escena\modelo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameOverException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWonException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boton.hpp">

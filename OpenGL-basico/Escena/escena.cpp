@@ -9,6 +9,8 @@
 #include "entidad.h"
 #include "modelo.h"
 #include <vector>
+#include "../GameOverException.h"
+#include "../GameWonException.h"
 
 
 
@@ -81,7 +83,7 @@ escena::escena()
     modelo pinchos = ManejadorModelos::load_model("../Modelos/spike.obj");
     printf("Se cargaron %d vertices", pinchos.vertices.size());
     modelo portal = ManejadorModelos::load_model("../Modelos/Portal_01.fbx");
-    addEntidad(entidad(portal.vertices, portal.indices, vector3(14, 3.5, 0), vector3(0.47, 0.47, 0.47), manejadorT::texturapor().getId(), entidad::piso));
+    addEntidad(entidad(portal.vertices, portal.indices, vector3(14, 3.5, 0), vector3(0.47, 0.47, 0.47), manejadorT::texturapor().getId(), entidad::portal));
     addEntidad(entidad(manzana.vertices, manzana.indices, vector3(7, 1, 0), vector3(0.01f, 0.01f, 0.01f), manejadorT::texturaM().getId(), entidad::manzana));
     addEntidad(entidad(manzana.vertices, manzana.indices, vector3(12, 0, 0), vector3(0.01f, 0.01f, 0.01f), manejadorT::texturaM().getId(), entidad::manzana));
     addEntidad(entidad(manzana.vertices, manzana.indices, vector3(8, 3, 0), vector3(0.01f, 0.01f, 0.01f), manejadorT::texturaM().getId(), entidad::manzana));
@@ -166,7 +168,7 @@ void escena::actualizar_escena()
     if (!jugador_->get_contacto()) {
         jugador_->caer();
         if (jugador_->get_cuerpo()[0].get_y() < -20) {
-            printf("Mori");
+            throw GameOverException();
         }
         switch (modo_camara_) {
         case primera_persona:
@@ -180,9 +182,13 @@ void escena::actualizar_escena()
         case normal:
             break;
         }
+        int i = 0;
         for (const vector3& segmento : jugador_->get_cuerpo()) {
-            if (calcular_colisiones(vector3(0, 0, 0), segmento) == 3) {
-                printf("Mori");
+            printf("Segmento: %d \n", i);
+            printf("Colision: %d \n",calcular_colisiones(vector3(0, 0, 0), segmento,false));
+            i++;
+            if (calcular_colisiones(vector3(0, 0, 0), segmento,false) == 3) {
+                throw GameOverException();
             }
         }
         calcular_gravedad();
@@ -208,10 +214,10 @@ void escena::dibujar_jugador(bool primera_persona) {
 
 }
 
-unsigned int escena::calcular_colisiones(const vector3& direccion, const vector3& segmento) {
+unsigned int escena::calcular_colisiones(const vector3& direccion, const vector3& segmento, const bool gravedad) {
 
     vector3 nueva_posicion = segmento + direccion * jugador_->get_velocidad();
-    const float margen = 0.5f + 0.1f;
+    const float margen = 0.5f + 0.01f;
 
     for (const vector3& bloque : bloques_) {
         if (std::abs(bloque.get_x() - nueva_posicion.get_x()) < margen &&
@@ -219,21 +225,29 @@ unsigned int escena::calcular_colisiones(const vector3& direccion, const vector3
             return 2;
         }
     }
+    if (!gravedad) {
 
-    for (int i = 1; i < jugador_->get_segmentos(); i++) {
-        const vector3& segmento_cuerpo = jugador_->get_cuerpo()[i];
-        if (std::abs(segmento_cuerpo.get_x() - nueva_posicion.get_x()) < margen &&
-            std::abs(segmento_cuerpo.get_y() - nueva_posicion.get_y()) < margen) {
-            return 1;
+        for (const vector3& pincho : pinchos_) {
+            if (std::abs(pincho.get_x() - nueva_posicion.get_x()) < margen &&
+                std::abs(pincho.get_y() - nueva_posicion.get_y()) < margen) {
+                return 3;
+            }
+        }
+
+        for (int i = 1; i < jugador_->get_segmentos(); i++) {
+            const vector3& segmento_cuerpo = jugador_->get_cuerpo()[i];
+            if (std::abs(segmento_cuerpo.get_x() - nueva_posicion.get_x()) < margen &&
+                std::abs(segmento_cuerpo.get_y() - nueva_posicion.get_y()) < margen) {
+                return 1;
+            }
+        }
+
+        if (std::abs(portal.get_x() - nueva_posicion.get_x()) < margen &&
+            std::abs(portal.get_y() + 0.5f - nueva_posicion.get_y()) < margen) {
+            return 4;
         }
     }
 
-    for (const vector3& pincho : pinchos_) {
-        if (std::abs(pincho.get_x() - nueva_posicion.get_x()) < margen &&
-            std::abs(pincho.get_y() - nueva_posicion.get_y()) < margen) {
-            return 3;
-        }
-    }
     return 0;
 
 }
@@ -244,6 +258,7 @@ void escena::mover_jugador(const SDL_Event& evento)
     const float velocidad = jugador_->get_velocidad();;
     vector3 movimiento;
     bool choca = false;
+    unsigned int colision;
     switch (modo_camara_)
     {
     case primera_persona:
@@ -269,12 +284,19 @@ void escena::mover_jugador(const SDL_Event& evento)
             direccion = vector3(0, 0, 0);
         }
         direccion.normalize();
+        colision = calcular_colisiones(direccion, jugador_->get_cuerpo()[0],false);
         switch (evento.key.keysym.sym) {
         case SDLK_UP:
             jugador_->set_direccion(direccion);
-            choca = calcular_colisiones(direccion,jugador_->get_cuerpo()[0]) != 0;
+            choca = colision != 0 && colision != 3 && colision !=4;
             if (!choca) {
                 jugador_->mover();
+                if (colision == 3) {
+                    throw GameOverException();
+                }
+                else if (colision == 4) {
+                    throw GameWonException();
+                }
             }
             break;
         default:
@@ -289,30 +311,58 @@ void escena::mover_jugador(const SDL_Event& evento)
         switch (evento.key.keysym.sym) {
         case SDLK_UP:
             jugador_->set_direccion(vector3(1, 0, 0));
-            choca = calcular_colisiones(vector3(1, 0, 0), jugador_->get_cuerpo()[0]) != 0;
+            colision = calcular_colisiones(vector3(1, 0, 0), jugador_->get_cuerpo()[0],false);
+            choca = colision != 0 && colision != 3 && colision != 4;
             if (!choca) {
                 jugador_->mover();
+                if (colision == 3) {
+                    throw GameOverException();
+                }
+                else if (colision == 4) {
+                    throw GameWonException();
+                }
             }
             break;
         case SDLK_DOWN:
             jugador_->set_direccion(vector3(-1, 0, 0));
-            choca = calcular_colisiones(vector3(-1, 0, 0), jugador_->get_cuerpo()[0]) != 0;
+            colision = calcular_colisiones(vector3(-1, 0, 0), jugador_->get_cuerpo()[0],false);
+            choca = colision != 0 && colision != 3 && colision != 4;
             if (!choca) {
                 jugador_->mover();
+                if (colision == 3) {
+                    throw GameOverException();
+                }
+                else if (colision == 4) {
+                    throw GameWonException();
+                }
             }
             break;
         case SDLK_LEFT:
             jugador_->set_direccion(vector3(0, 1, 0));
-            choca = calcular_colisiones(vector3(0, 1, 0), jugador_->get_cuerpo()[0]) != 0;
+            colision = calcular_colisiones(vector3(0, 1, 0), jugador_->get_cuerpo()[0],false);
+            choca = colision != 0 && colision != 3 && colision != 4;
             if (!choca) {
                 jugador_->mover();
+                if (colision == 3) {
+                    throw GameOverException();
+                }
+                else if (colision == 4) {
+                    throw GameWonException();
+                }
             }
             break;
         case SDLK_RIGHT:
             jugador_->set_direccion(vector3(0, -1, 0));
-            choca = calcular_colisiones(vector3(0, -1, 0), jugador_->get_cuerpo()[0]) != 0;
+            colision = calcular_colisiones(vector3(0, -1, 0), jugador_->get_cuerpo()[0],false);
+            choca = colision != 0 && colision != 3 && colision != 4;
             if (!choca) {
                 jugador_->mover();
+                if (colision == 3) {
+                    throw GameOverException();
+                }
+                else if (colision == 4) {
+                    throw GameWonException();
+                }
             }
             break;
         default:
@@ -326,30 +376,58 @@ void escena::mover_jugador(const SDL_Event& evento)
         switch (evento.key.keysym.sym) {
         case SDLK_UP:
             jugador_->set_direccion(vector3(1, 0, 0));
-            choca = calcular_colisiones(vector3(1, 0, 0), jugador_->get_cuerpo()[0]) != 0;
+            colision = calcular_colisiones(vector3(1, 0, 0), jugador_->get_cuerpo()[0],false);
+            choca = colision != 0 && colision != 3 && colision != 4;
             if (!choca) {
                 jugador_->mover();
+                if (colision == 3) {
+                    throw GameOverException();
+                }
+                else if (colision == 4) {
+                    throw GameWonException();
+                }
             }
             break;
         case SDLK_DOWN:
             jugador_->set_direccion(vector3(-1, 0, 0));
-            choca = calcular_colisiones(vector3(-1, 0, 0), jugador_->get_cuerpo()[0]) != 0;
+            colision = calcular_colisiones(vector3(-1, 0, 0), jugador_->get_cuerpo()[0],false);
+            choca = colision != 0 && colision != 3 && colision != 4;
             if (!choca) {
                 jugador_->mover();
+                if (colision == 3) {
+                    throw GameOverException();
+                }
+                else if (colision == 4) {
+                    throw GameWonException();
+                }
             }
             break;
         case SDLK_LEFT:
             jugador_->set_direccion(vector3(0, 1, 0));
-            choca = calcular_colisiones(vector3(0, 1, 0),jugador_->get_cuerpo()[0]) != 0;
+            colision = calcular_colisiones(vector3(0, 1, 0), jugador_->get_cuerpo()[0],false);
+            choca = colision != 0 && colision != 3 && colision != 4;
             if (!choca) {
                 jugador_->mover();
+                if (colision == 3) {
+                    throw GameOverException();
+                }
+                else if (colision == 4) {
+                    throw GameWonException();
+                }
             }
             break;
         case SDLK_RIGHT:
             jugador_->set_direccion(vector3(0, -1, 0));
-            choca = calcular_colisiones(vector3(0, -1, 0), jugador_->get_cuerpo()[0]) != 0;
+            colision = calcular_colisiones(vector3(0, -1, 0), jugador_->get_cuerpo()[0],false);
+            choca = colision != 0 && colision != 3 && colision != 4;
             if (!choca) {
                 jugador_->mover();
+                if (colision == 3) {
+                    throw GameOverException();
+                }
+                else if (colision == 4) {
+                    throw GameWonException();
+                }
             }
             break;
         default:
@@ -384,7 +462,7 @@ void escena::mover_jugador(const SDL_Event& evento)
 
 void escena::calcular_gravedad() {
     for (const vector3& segmento : jugador_->get_cuerpo()) {
-        if (calcular_colisiones(vector3(0, -1, 0), segmento) == 2 ) {
+        if (calcular_colisiones(vector3(0, -1, 0), segmento, true) == 2 ) {
             jugador_->set_contacto(true);
             return;
         }
@@ -417,6 +495,10 @@ void escena::addEntidad(const entidad& e) {
         break;
     case entidad::pincho:
         pinchos_.push_back(e.posicion_);
+        entidades_.push_back(e);
+        break;
+    case entidad::portal:
+        portal = e.posicion_;
         entidades_.push_back(e);
         break;
     }

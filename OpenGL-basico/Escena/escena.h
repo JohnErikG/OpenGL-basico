@@ -46,7 +46,8 @@ private:
     std::vector<entidad> manzanas_;
     std::vector<vector3> pinchos_;
     std::vector<vector3> bloques_;
+    vector3 portal;
     void calcular_manzanas();
-    unsigned int calcular_colisiones(const vector3& direccion, const vector3& segmento);
+    unsigned int calcular_colisiones(const vector3& direccion, const vector3& segmento, const bool gravedad);
     void calcular_gravedad();
 };

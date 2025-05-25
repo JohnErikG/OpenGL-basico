@@ -16,7 +16,8 @@ public:
 		piso,
 		pincho,
 		manzana,
-		jugador
+		jugador,
+		portal
 	};
 	std::vector<vertex> vertices_;
 	std::vector<unsigned int> indices_;

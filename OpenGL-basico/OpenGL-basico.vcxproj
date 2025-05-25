@@ -176,6 +176,8 @@
     <ClInclude Include="gamehub.h" />
     <ClInclude Include="Escena\entidad.h" />
     <ClInclude Include="Escena\modelo.h" />
+    <ClInclude Include="GameOverException.h" />
+    <ClInclude Include="GameWonException.h" />
     <ClInclude Include="manejadorL.h" />
     <ClInclude Include="menuDeSettings.h" />
     <ClInclude Include="rectangulo.h" />
