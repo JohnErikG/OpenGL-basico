@@ -95,7 +95,7 @@ int main(int argc, char* argv[]) {
 			}
 			else {
 				SDL_SetRelativeMouseMode(SDL_TRUE);
-				Timer::resume();
+				
 					try {
 						esc.actualizar_escena();
 					}
@@ -144,7 +144,7 @@ int main(int argc, char* argv[]) {
 			frameCount = 0;
 			lastTime = frameEnd;
 		}
-		const double TARGET_FRAME_TIME = 1.0 / (60.0*vel); // 60 FPS
+		const double TARGET_FRAME_TIME = 1.0 / (60.0); // 60 FPS
 		if (elapsedSeconds < TARGET_FRAME_TIME) {
 			SDL_Delay(static_cast<Uint32>((TARGET_FRAME_TIME - elapsedSeconds) * 1000));
 		}
@@ -158,7 +158,7 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON, escena &esc, bool &start, bool &active, float &vel, bool &won) {
-	std::array<boton1*, 9> botones = menuDeSettings::initMs()->getBotones();
+	std::array<boton1*, 8> botones = menuDeSettings::initMs()->getBotones();
 	if (start) {
 		while (SDL_PollEvent(&evento)) {
 			switch (evento.type) {
@@ -179,43 +179,43 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 					}
 					else if (botones[1]->is_inside(evento.button.x, evento.button.y)) {
 						botones[1]->on_clickvel2();
-						esc.setVelocidad(0.5f);
-						vel = 0.5f;
+						esc.setVelocidad(1.0f);
+						vel = 1.0f;
 						botones[1]->set_click(true);
 						botones[0]->set_click(false);
 						botones[2]->set_click(false);
 					}
+					//else if (botones[2]->is_inside(evento.button.x, evento.button.y)) {
+					//	botones[2]->on_clickvel3();
+					//	esc.setVelocidad(1.0f);
+					//	vel = 1.0f;
+					//	botones[2]->set_click(true);
+					//	botones[1]->set_click(false);
+					//	botones[0]->set_click(false);
+					//}
 					else if (botones[2]->is_inside(evento.button.x, evento.button.y)) {
-						botones[2]->on_clickvel3();
-						esc.setVelocidad(1.0f);
-						vel = 1.0f;
-						botones[2]->set_click(true);
-						botones[1]->set_click(false);
-						botones[0]->set_click(false);
+						botones[2]->on_clickluz1();
+						botones[2]->cambiarClick();
 					}
 					else if (botones[3]->is_inside(evento.button.x, evento.button.y)) {
-						botones[3]->on_clickluz1();
+						botones[3]->on_clickluz2();
 						botones[3]->cambiarClick();
 					}
 					else if (botones[4]->is_inside(evento.button.x, evento.button.y)) {
-						botones[4]->on_clickluz2();
+						botones[4]->on_clickluz3();
 						botones[4]->cambiarClick();
 					}
 					else if (botones[5]->is_inside(evento.button.x, evento.button.y)) {
-						botones[5]->on_clickluz3();
+						botones[5]->on_clickTexOn();
 						botones[5]->cambiarClick();
 					}
 					else if (botones[6]->is_inside(evento.button.x, evento.button.y)) {
-						botones[6]->on_clickTexOn();
+						botones[6]->on_clickwire();
 						botones[6]->cambiarClick();
 					}
 					else if (botones[7]->is_inside(evento.button.x, evento.button.y)) {
-						botones[7]->on_clickwire();
+						botones[7]->on_clickfaceteado();
 						botones[7]->cambiarClick();
-					}
-					else if (botones[8]->is_inside(evento.button.x, evento.button.y)) {
-						botones[8]->on_clickfaceteado();
-						botones[8]->cambiarClick();
 					}
 				}
 				break;
@@ -251,6 +251,10 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 				case SDLK_p:
 					if (active) {
 						menuDeSettings::initMs()->setMenuActivo(!menuDeSettings::initMs()->getMenuActivo());
+						if (Timer::isPaused()) {
+							Timer::resume();
+							SDL_SetRelativeMouseMode(SDL_TRUE);
+						}
 					}
 					break;
 				case SDLK_r:

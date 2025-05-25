@@ -8,7 +8,7 @@ class menuDeSettings
 	static menuDeSettings* instance;
 	boton1 v1;
 	boton1 v2;
-	boton1 v3;
+	//boton1 v3;
 	boton1 l1;
 	boton1 l2;
 	boton1 l3;
@@ -20,7 +20,7 @@ class menuDeSettings
 
 public:
 	explicit menuDeSettings(const int width,const  int height);
-	std::array<boton1*, 9 > getBotones() ;
+	std::array<boton1*, 8 > getBotones() ;
 	void click(int x, int y);
 	GLuint getTextureId() const;
 	static menuDeSettings* initMs();
