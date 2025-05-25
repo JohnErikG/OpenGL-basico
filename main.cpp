@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
 	SDL_GLContext context = SDL_GL_CreateContext(win);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_ShowCursor(SDL_ENABLE);
-
+	SDL_GL_SetSwapInterval(0);
 
 
 	glMatrixMode(GL_PROJECTION);
@@ -67,13 +67,18 @@ int main(int argc, char* argv[]) {
 	z = 5;
 	float degrees = 0;
 	
-
+	Uint64 performanceFrequency = SDL_GetPerformanceFrequency();
+	Uint64 frameStart, frameEnd;
+	double elapsedSeconds;
+	Uint64 lastTime = SDL_GetPerformanceCounter();
+	int frameCount = 0;
 	//FIN INICIALIZACION
 	bool textOn = true;
 	bool luzON = false;
 	float vel = 1;
 	//LOOP PRINCIPAL
 	do{
+		frameStart = SDL_GetPerformanceCounter();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		if (start) {
@@ -127,10 +132,25 @@ int main(int argc, char* argv[]) {
 
 			renderMenu::dibujarInicio();
 		}
-
+		
 		controlador_evento(evento,fin, textOn, luzON, esc, start);
 		//FIN MANEJO DE EVENTOS
 		SDL_GL_SwapWindow(win);
+		frameEnd = SDL_GetPerformanceCounter();
+		elapsedSeconds = (frameEnd - frameStart) / static_cast<double>(performanceFrequency);
+		frameCount++;
+
+		// Mostrar FPS cada segundo
+		if ((frameEnd - lastTime) / static_cast<double>(performanceFrequency) >= 1.0) {
+			std::cout << "FPS: " << frameCount << std::endl;
+			frameCount = 0;
+			lastTime = frameEnd;
+		}
+		const double TARGET_FRAME_TIME = 1.0 / (60.0*vel); // 60 FPS
+		if (elapsedSeconds < TARGET_FRAME_TIME) {
+			SDL_Delay(static_cast<Uint32>((TARGET_FRAME_TIME - elapsedSeconds) * 1000));
+		}
+
 	} while (!fin);
 	//FIN LOOP PRINCIPAL
 	// LIMPIEZA
@@ -220,7 +240,9 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 					menuDeSettings::initMs()->setMenuActivo(!menuDeSettings::initMs()->getMenuActivo());
 					cout << "abrir menu";
 					break;
-
+				case SDLK_r:
+					Timer::reset();
+					break;
 				case SDLK_v:
 					esc.cambiar_camara();
 					cout << "CAMBIE";
