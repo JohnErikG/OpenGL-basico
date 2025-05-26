@@ -16,6 +16,7 @@ void entidad::dibujar() const {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
     if (settings::getInstance()->textura) {
+        glShadeModel(GL_SMOOTH);
         glEnable(GL_TEXTURE_2D);
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         glBindTexture(GL_TEXTURE_2D, textura_);

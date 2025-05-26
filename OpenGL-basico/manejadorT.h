@@ -9,7 +9,7 @@ class manejadorT
 	Texturas imagenMuestra, texturaSuelo,texturaManzana, texturaPlayer, texturaportal, texWin;
 	Texturas texturaFondo, TextSettings;
 	const Texturas unoT, dosT, tresT, cuatroT, cincoT, seisT, sieteT, ochoT, nueveT, ceroT;
-	explicit  manejadorT() : imagenMuestra(cargadorT::cargarTextura("../canon.png")), 
+	explicit  manejadorT() : imagenMuestra(cargadorT::cargarTextura("../Texturas/canon.png")), 
 							 texturaSuelo(cargadorT::cargarTextura("../Texturas/tierra.jpg")), texturaportal(cargadorT::cargarTexturaM("../Texturas/portal.png"))
 		, unoT(cargadorT::cargarTextura("../Texturas/uno.png")), dosT(cargadorT::cargarTextura("../Texturas/dos.png")), tresT(cargadorT::cargarTextura("../Texturas/tres.png")), 
 		cuatroT(cargadorT::cargarTextura("../Texturas/cuatro.png")), cincoT(cargadorT::cargarTextura("../Texturas/cinco.png")),
