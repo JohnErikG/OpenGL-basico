@@ -175,7 +175,6 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 						vel = 0.5f;
 						botones[0]->set_click(true);
 						botones[1]->set_click(false);
-						botones[2]->set_click(false);
 					}
 					else if (botones[1]->is_inside(evento.button.x, evento.button.y)) {
 						botones[1]->on_clickvel2();
@@ -183,7 +182,7 @@ void controlador_evento(SDL_Event &evento, bool &fin, bool  &textOn, bool &luzON
 						vel = 1.0f;
 						botones[1]->set_click(true);
 						botones[0]->set_click(false);
-						botones[2]->set_click(false);
+
 					}
 					//else if (botones[2]->is_inside(evento.button.x, evento.button.y)) {
 					//	botones[2]->on_clickvel3();
